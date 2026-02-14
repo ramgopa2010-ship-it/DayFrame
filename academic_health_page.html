@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>ACADEMIC HEALTH</title>
+
+  <style>
+    :root {
+      --cream: #f5ebe0;
+      --tan: #d5bdaf;
+      --brown: #8b7968;
+      --dark: #4a403a;
+      --accent: #5dbea3;
+      --warning: #f4a261;
+      --urgent: #e76f51;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5ebe0 0%, #9f8d83 100%);
+      color: var(--dark);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    .title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .support {
+      font-size: 50px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--brown);
+      margin-bottom: -20px;
+    }
+
+    .mental {
+      font-size: 100px;
+      font-weight: 900;
+      margin: 10px 0 0;
+      color: var(--dark);
+      letter-spacing: -2px;
+      animation: spreadOut 3s ease-out forwards;
+    }
+
+    @keyframes spreadOut {
+      from {
+        letter-spacing: -4px;
+      }
+
+      to {
+        letter-spacing: 1px;
+      }
+    }
+
+    /* Dashboard Grid Layout */
+    .academic-dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      grid-template-areas:
+        "pomodoro pomodoro"
+        "overwhelm deadline"
+        "microstarts microstarts"
+        "music music"
+        "drive drive"
+        "toddle toddle"
+        "desmos desmos"
+        "khan khan";
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .academic-dashboard {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "pomodoro"
+          "overwhelm"
+          "deadline"
+          "microstarts"
+          "music"
+          "drive"
+          "toddle"
+          "desmos"
+          "khan";
+      }
+    }
+
+    /* Card Base Style */
+    .academic-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(139, 121, 104, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .academic-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      color: var(--dark);
+    }
+
+    .card-subtitle {
+      font-size: 14px;
+      color: var(--cream);
+      margin: 0 0 20px;
+    }
+
+    /* Pomodoro - Full Width */
+    .pomodoro-card {
+      grid-area: pomodoro;
+      background: linear-gradient(135deg, var(--accent), #4a9d85);
+      color: white;
+      text-align: center;
+      padding: 48px 28px;
+    }
+
+    .pomodoro-card .card-title {
+      color: white;
+      font-size: 50px;
+    }
+
+    .timer-display {
+      font-size: 96px;
+      font-family: Poppins;
+      font-weight: 750;
+      margin: 24px 0;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .timer-btn {
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .timer-btn.start {
+      background: white;
+      color: var(--accent);
+    }
+
+    .timer-btn.pause {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid white;
+    }
+
+    .timer-btn.reset {
+      background: rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+
+    .timer-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .overwhelm-card {
+      grid-area: overwhelm;
+    }
+
+    .gauge-value {
+      font-size: 64px;
+      font-weight: 900;
+      text-align: center;
+      margin: 20px 0;
+      color: var(--accent);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent) 0%, var(--warning) 50%, var(--urgent) 100%);
+      outline: none;
+      -webkit-appearance: none;
+      margin: 20px 0;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--dark);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--dark);
+      cursor: pointer;
+    }
+
+    .advice-box {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(93, 190, 163, 0.1);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Deadline Visualizer */
+    .deadline-card {
+      grid-area: deadline;
+    }
+
+    input[type="date"] {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid var(--tan);
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 16px;
+    }
+
+    .deadline-output {
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      margin: 16px 0;
+      color: var(--dark);
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 24px;
+      background: rgba(139, 121, 104, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--accent), var(--urgent));
+      width: 0%;
+      transition: width 0.6s ease;
+      border-radius: 999px;
+    }
+
+    .microstarts-card {
+      grid-area: microstarts;
+    }
+
+    .micro-form {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .micro-input {
+      flex: 1;
+      padding: 14px;
+      border: 2px solid var(--tan);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .micro-add-btn {
+      padding: 14px 28px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .micro-add-btn:hover {
+      background: #4a9d85;
+      transform: scale(1.05);
+    }
+
+    .micro-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .micro-list li {
+      padding: 14px;
+      margin-bottom: 8px;
+      background: rgba(93, 190, 163, 0.05);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 4px solid var(--accent);
+    }
+
+    .micro-delete {
+      background: var(--urgent);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .micro-delete:hover {
+      background: #d45742;
+    }
+
+    .music-card {
+      grid-area: music;
+      background: var(--tan);
+      color: white;
+      text-align: center;
+      padding: 32px;
+    }
+
+    .music-link {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 16px 40px;
+      background: white;
+      color: var(--brown);
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 18px;
+      transition: all 0.3s;
+    }
+
+    .music-link:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .drive-card {
+      grid-area: drive;
+      background: var(--brown);
+      color: white;
+      text-align: center;
+      padding: 32px;
+    }
+
+    .toddle-card {
+      grid-area: toddle;
+      background: var(--tan);
+      color: white;
+      text-align: center;
+      padding: 32px;
+    }
+
+    .desmos-card {
+      grid-area: desmos;
+      background: var(--brown);
+      color: white;
+      text-align: center;
+      padding: 32px;
+    }
+
+    .khan-card {
+      grid-area: khan;
+      background: var(--tan);
+      color: white;
+      text-align: center;
+      padding: 32px;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="title">
+    <p class="support">Build Your</p>
+    <p class="mental">Academic Confidence</p>
+  </section>
+
+  <div class="academic-dashboard">
+
+    <div class="academic-card pomodoro-card">
+      <h2 class="card-title">Pomodoro Timer</h2>
+      <div class="timer-display" id="timer">25:00</div>
+      <div class="timer-controls">
+        <button class="timer-btn start" id="startBtn">Start</button>
+        <button class="timer-btn pause" id="pauseBtn">Pause</button>
+        <button class="timer-btn reset" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="academic-card overwhelm-card">
+      <h2 class="card-title">Overwhelm Gauge</h2>
+      <p class="card-subtitle">How stressed are you right now?</p>
+      <div class="gauge-value" id="overwhelmValue">5</div>
+      <input id="overwhelm" type="range" min="1" max="10" value="5" />
+      <div class="advice-box" id="overwhelmAdvice">
+        Move the slider to get a suggestion.
+      </div>
+    </div>
+
+    <div class="academic-card deadline-card">
+      <h2 class="card-title">Deadline Visualizer</h2>
+      <p class="card-subtitle">When's your next big deadline?</p>
+      <input id="deadlineDate" type="date" />
+      <div class="deadline-output" id="deadlineOutput">Select a date</div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="deadlineBar"></div>
+      </div>
+    </div>
+
+    <div class="academic-card microstarts-card">
+      <h2 class="card-title">Micro-Start Builder</h2>
+      <p class="card-subtitle">Break down larger tasks with a simple beginning</p>
+      <form id="microStartForm" class="micro-form">
+        <input id="microTask" type="text" class="micro-input"
+          placeholder="What's one small thing you can do in 5 minutes?" />
+        <button type="submit" class="micro-add-btn">Add</button>
+      </form>
+      <ul id="microStartList" class="micro-list"></ul>
+    </div>
+
+    <div class="academic-card music-card">
+      <h2 class="card-title">Youtube Music</h2>
+      <p class="card-subtitle">Listen to your favorite songs to get you in the zone.</p>
+      <a href="https://music.youtube.com/" class="music-link" target="_blank">Open YouTube Music</a>
+    </div>
+
+    <div class="academic-card drive-card">
+      <h2 class="card-title">Google Drive</h2>
+      <p class="card-subtitle">Open up Google drive to access your files directly.</p>
+      <a href="https://drive.google.com/drive/u/0/home" class="music-link" target="_blank">Open Google Drive</a>
+    </div>
+
+    <div class="academic-card toddle-card">
+      <h2 class="card-title">Toddle</h2>
+      <p class="card-subtitle">Access Toddle directly from this website.</p>
+      <a href="https://web.toddleapp.com/platform/3028/courses" class="music-link" target="_blank">Open Toddle</a>
+    </div>
+
+    <div class="academic-card desmos-card">
+      <h2 class="card-title">Desmos</h2>
+      <p class="card-subtitle">Graph your equations and solve mathematical problems using Desmos</p>
+      <a href="https://www.desmos.com/" class="music-link" target="_blank">Open Desmos</a>
+    </div>
+
+    <div class="academic-card khan-card">
+      <h2 class="card-title">Khan Academy</h2>
+      <p class="card-subtitle">Study anything you want using Khan Academy</p>
+      <a href="https://www.khanacademy.org/" class="music-link" target="_blank">Open Khan Academy</a>
+    </div>
+
+  </div>
+
+</body>
+
+<script>
+  const overwhelm = document.getElementById("overwhelm");
+  const overwhelmValue = document.getElementById("overwhelmValue");
+  const overwhelmAdvice = document.getElementById("overwhelmAdvice");
+
+  function getAdvice(score) {
+    if (score <= 3) {
+      return "You’re in the good zone. Do one focused 25-minute block (You can use the Pomodoro Timer above) to keep up the momentum and ensure that you don't burn yourself out immedieately.";
+    }
+    if (score <= 6) {
+      return "You’re feeling a little bit of pressure. First try a 25 minutes focus work (You can use the Pomodoro Timer above), then have a 5 minutes break. One round is enough to start that process.";
+    }
+    if (score <= 8) {
+      return "You’re overloaded as of now. Do a 60-second reset: inhale 4s, hold 2s, exhale 6s. Or you can also visit the Mental Health page and relieve yourself of any unwanted stress. Then pick one tiny task to start.";
+    }
+    return "This is intense. Step away for 5 minutes, drink water, and consider talking to someone you trust. You may also visit the Mental Health page and use the items in the page to reduce your stress.";
+  }
+
+  function updateOverwhelmUI() {
+    const score = Number(overwhelm.value);
+    overwhelmValue.textContent = score;
+    overwhelmAdvice.textContent = getAdvice(score);
+  }
+
+  overwhelm.addEventListener("input", updateOverwhelmUI);
+  updateOverwhelmUI(); 
+</script>
+
+
+<script>
+  const microStartForm = document.getElementById("microStartForm");
+  const microTaskInput = document.getElementById("microTask");
+  const microStartList = document.getElementById("microStartList");
+
+  // Optional: persist with localStorage
+  const MICRO_KEY = "dayframe_microstarts";
+
+  function loadMicroStarts() {
+    try {
+      return JSON.parse(localStorage.getItem(MICRO_KEY) || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function saveMicroStarts(items) {
+    localStorage.setItem(MICRO_KEY, JSON.stringify(items));
+  }
+
+  function renderMicroStarts(items) {
+    microStartList.innerHTML = "";
+    items.forEach((text, idx) => {
+      const li = document.createElement("li");
+      li.style.margin = "6px 0";
+
+      const span = document.createElement("span");
+      span.textContent = text;
+
+      const del = document.createElement("button");
+      del.type = "button";
+      del.textContent = "✕";
+      del.style.marginLeft = "10px";
+      del.addEventListener("click", () => {
+        const next = items.filter((_, i) => i !== idx);
+        saveMicroStarts(next);
+        renderMicroStarts(next);
+      });
+
+      li.appendChild(span);
+      li.appendChild(del);
+      microStartList.appendChild(li);
+    });
+  }
+
+  let microStarts = loadMicroStarts();
+  renderMicroStarts(microStarts);
+
+  microStartForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = microTaskInput.value.trim();
+    if (!text) return;
+
+    microStarts = [text, ...microStarts].slice(0, 12); // keep it short + punchy
+    saveMicroStarts(microStarts);
+    renderMicroStarts(microStarts);
+
+    microTaskInput.value = "";
+    microTaskInput.focus();
+  });
+</script>
+
+
+
+<script>
+  // ===== Deadline Visualizer (JS) =====
+  const deadlineDate = document.getElementById("deadlineDate");
+  const deadlineOutput = document.getElementById("deadlineOutput");
+  const deadlineBar = document.getElementById("deadlineBar");
+
+  const DEADLINE_KEY = "dayframe_deadline_date";
+  const WINDOW_DAYS = 30; // simple reference window for the progress bar
+
+  // restore
+  const savedDate = localStorage.getItem(DEADLINE_KEY);
+  if (savedDate) deadlineDate.value = savedDate;
+
+  function daysBetween(today, target) {
+    // normalize to midnight to avoid partial-day confusion
+    const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const t1 = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+    const ms = t1 - t0;
+    return Math.round(ms / (1000 * 60 * 60 * 24));
+  }
+
+  function updateDeadlineUI() {
+    const val = deadlineDate.value;
+    if (!val) {
+      deadlineOutput.textContent = "Select a date to visualize time remaining.";
+      deadlineBar.style.width = "0%";
+      return;
+    }
+
+    localStorage.setItem(DEADLINE_KEY, val);
+
+    const target = new Date(val + "T00:00:00");
+    const today = new Date();
+    const daysLeft = daysBetween(today, target);
+
+    if (daysLeft < 0) {
+      deadlineOutput.textContent = `That deadline was ${Math.abs(daysLeft)} day(s) ago. (If this is wrong, re-check the date.)`;
+      deadlineBar.style.width = "100%";
+      return;
+    }
+
+    deadlineOutput.textContent = `${daysLeft} day(s) remaining.`;
+
+    // Bar logic: 0% when >= WINDOW_DAYS away, 100% when 0 days left
+    const clamped = Math.max(0, Math.min(WINDOW_DAYS, daysLeft));
+    const pct = ((WINDOW_DAYS - clamped) / WINDOW_DAYS) * 100;
+    deadlineBar.style.width = `${pct}%`;
+  }
+
+  deadlineDate.addEventListener("input", updateDeadlineUI);
+  updateDeadlineUI(); // initial render
+</script>
+
+
+<script>
+  document.getElementById('startBtn').addEventListener('click', startTimer);
+  document.getElementById('pauseBtn').addEventListener('click', pauseTimer);
+  document.getElementById('resetBtn').addEventListener('click', resetTimer);
+
+  let timeLeft = 25 * 60;  // 25 minutes in seconds
+  let isRunning = false;
+  let timerInterval = null;
+
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  function updateDisplay() {
+    document.getElementById('timer').textContent = formatTime(timeLeft);
+  }
+  function startTimer() {
+    if (!isRunning) {
+      isRunning = true;
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateDisplay();
+
+        if (timeLeft === 0) {
+          clearInterval(timerInterval);
+          isRunning = false;
+          alert('Time is up!');
+        }
+      }, 1000);
+    }
+  }
+  function pauseTimer() {
+    isRunning = false;
+    clearInterval(timerInterval);
+  }
+  function resetTimer() {
+    pauseTimer();
+    timeLeft = 25 * 60;
+    updateDisplay();
+  }
+</script>
+</body>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>DayFrame</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body style="background-image: linear-gradient(to bottom, rgb(214, 204, 194), rgb(245, 235, 224))">
+  <svg preserveAspectRatio="xMidYMid slice" viewBox="10 10 80 80">
+    <defs>
+      <style>
+        @keyframes rotate {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .out-top {
+          animation: rotate 20s linear infinite;
+          transform-origin: 13px 25px;
+        }
+
+        .in-top {
+          animation: rotate 10s linear infinite;
+          transform-origin: 13px 25px;
+        }
+
+        .out-bottom {
+          animation: rotate 25s linear infinite;
+          transform-origin: 84px 93px;
+        }
+
+        .in-bottom {
+          animation: rotate 15s linear infinite;
+          transform-origin: 84px 93px;
+        }
+      </style>
+    </defs>
+    <path fill="#EDEDE9" class="out-top"
+      d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z" />
+    <path fill="#D5BDAF" class="in-top"
+      d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z" />
+    <path fill="#D5BDAF" class="out-bottom"
+      d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z" />
+    <path fill="#EDEDE9" class="in-bottom"
+      d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z" />
+  </svg>
+
+  <div class="links">
+  </div>
+  <header class="navbar">
+    <a href="#top" class="logo">DayFrame</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#topics">Cards</a>
+      <a href="#footer">Closing</a>
+    </nav>
+  </header>
+  <main class="hero" id="top">
+    <p class="main_title">DayFrame</p>
+    <hr class="line1">
+    <p class="slogan">Frame your day. Understand yourself.</p>
+  </main>
+
+  <section class="about-section" id="about">
+    <img class="about-img about-img-left" src="assets/images2.png" alt="">
+    <img class="about-img about-img-right" src="assets/brain_wreck.png" alt="">
+
+    <!-- About card -->
+    <div class="about-card">
+      <p class="about">
+        <b>DayFrame</b> is a space to slow down in a world that never seems to. It’s built for moments when your
+        thoughts <b>feel heavy</b>, your emotions feel <b>tangled</b>, and you don’t quite know where to place them.
+        Here, there’s no pressure to be productive or <b>perfect</b>. Just room to be <b>honest</b>, reflect, and let
+        your feelings exist <b>without judgement</b>.
+      </p>
+    </div>
+  </section>
+
+  <br>
+  <br>
+  <br>
+  <section class="topics-section" id="topics">
+    <main class="cards">
+      <button class="card card--mental" onclick="mental()">Feeling Emotionally Drained?</button>
+      <button class="card card--academic" onclick="academic()">Is every test feeling like a final?</button>
+      <button class="card card--procrastination" onclick="procrastination()">Stuck in the "I'll do it later"
+        loop?</button>
+      <button class="card card--social" onclick="social()">Feeling left out or targeted?</button>
+    </main>
+    <main class="cards2">
+      <button class="card card--healthy" onclick="healthy()">Always tired, even after rest?</button>
+      <button class="card card--support" onclick="support()">Not sure who to talk to?</button>
+      <button class="card card--future" onclick="future()">Worried about what comes next?</button>
+      <button class="card card--confidence" onclick="confidence()">Feeling stuck or powerless?</button>
+    </main>
+  </section>
+
+  <footer class="site-footer" id="footer">
+    <div class="footer-content">
+      <h2 class="footer-title">Your day doesn't need to be <b>perfect</b>. It just needs a <b>frame.</b></h2>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="footer-cards">
+        <div class="footer-card">
+          <p>© 2026 DayFrame. All rights reserved.</p>
+        </div>
+
+        <div class="footer-card center">
+          <p>ramg2010@outlook.com</p>
+        </div>
+
+        <div class="footer-card">
+          <p>14th February, 2026</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .site-footer {
+      position: relative;
+      width: 95%;
+
+      padding: 60px 20px 40px;
+      margin-top: 100px;
+      overflow: hidden;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer-title {
+      font-family: Poppins;
+      text-align: center;
+      font-size: 48px;
+      font-weight: 500;
+      letter-spacing: 8px;
+      color: #595552c3;
+      margin-bottom: 60px;
+      text-transform: uppercase;
+    }
+
+    .footer-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      perspective: 1000px;
+    }
+
+    .footer-card {
+      font-family: Poppins;
+      background: #b4aca4c3;
+      backdrop-filter: blur(10px);
+      padding: 40px 30px;
+      border-radius: 20px;
+      color: #595552c3;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotateY(-10deg);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .footer-card.center {
+      font-family: Poppins;
+      background: #b4aca4c3;
+      transform: rotateY(0deg) scale(1.05);
+      z-index: 2;
+    }
+
+    .footer-card:last-child {
+      transform: rotateY(10deg);
+    }
+
+    .footer-card:hover {
+      transform: rotateY(0deg) scale(1.05);
+      background: #827c77c3;
+      color: white;
+    }
+
+    .footer-card p {
+      margin: 0;
+      text-transform: lowercase;
+    }
+
+    .site-footer::before {
+      top: 15%;
+      right: -10%;
+      transform: rotate(-15deg);
+    }
+
+    .site-footer::after {
+      bottom: 35%;
+      right: -10%;
+      transform: rotate(-12deg);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .footer-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .footer-card,
+      .footer-card.center,
+      .footer-card:last-child {
+        transform: rotateY(0deg) !important;
+      }
+
+      .footer-title {
+        font-size: 32px;
+        letter-spacing: 4px;
+      }
+    }
+  </style>
+
+  <style>
+    section {
+      scroll-margin-top: 90px;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 18px 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 9999;
+
+      background: rgba(255, 255, 255, 0.6);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .navbar nav {
+      display: flex;
+      align-items: center;
+      gap: 0px;
+      /* change to 6px / 8px / 12px */
+    }
+
+    .navbar a {
+      font-family: Poppins, sans-serif;
+      color: rgba(54, 38, 28, 0.9);
+      text-decoration: none;
+      font-weight: 600;
+
+      padding: 10px 20px;
+      /* IMPORTANT: padding in normal state */
+      border-radius: 12px;
+      transition: background 200ms ease, transform 200ms ease, color 200ms ease;
+    }
+
+    .navbar a:hover {
+      background: rgba(255, 255, 255, 0.45);
+      color: rgba(54, 38, 28, 1);
+      transform: translateY(-1px);
+    }
+
+    .navbar a:active {
+      transform: translateY(0px) scale(0.98);
+    }
+
+
+    .logo {
+      margin-left: 0 !important;
+      font-weight: 800;
+      padding: 10px 10px !important;
+    }
+
+    svg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: -200;
+    }
+
+    .hero {
+      min-height: calc(100vh - 70px);
+      /* subtract the padding-top */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 30px;
+    }
+
+    .about-section {
+      position: relative;
+      padding: 120px 20px;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      /* hides the “off-screen” part of the images */
+    }
+
+    .about {
+      font-family: Poppins;
+      background-color: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(10px);
+      color: rgb(67, 47, 35);
+      font-size: 20px;
+      max-width: 600px;
+      text-align: center;
+      border-radius: 20px;
+      padding: 40px;
+      margin: 0;
+    }
+
+    .about-card {
+      position: relative;
+      z-index: 2;
+      /* keeps card above images */
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20vh;
+    }
+
+    /* Side images */
+    .about-img {
+      position: absolute;
+      top: 15%;
+      width: clamp(220px, 26vw, 420px);
+      height: 400px;
+      transform: translateY(-50%);
+      border-radius: 22px;
+      z-index: 3;
+      opacity: 0.95;
+      pointer-events: none;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+      border: 6px solid rgba(255, 255, 255, 0.6);
+    }
+
+    /* Left image “peeking in” */
+    .about-img-left {
+      left: 0;
+      transform: translate(-5%, -5%) rotate(-8deg) scale(0.95);
+    }
+
+    /* Right image “peeking in” */
+    .about-img-right {
+      right: 0;
+      transform: translate(5%, -5%) rotate(8deg) scale(1);
+    }
+
+    body {
+      transition: opacity 0.6s ease;
+      padding-top: 70px;
+    }
+
+    body.fade-out {
+      opacity: 0;
+    }
+
+    .line1 {
+      width: min(1150px, 90%);
+      height: 10px;
+      border: 0;
+      margin-bottom: 40px;
+      background: rgba(255, 255, 255, 0.783);
+    }
+
+    .main_title {
+      font-size: clamp(64px, 10vw, 180px);
+      margin: 0;
+      font-weight: 800;
+      font-size: 200px;
+      font-family: Poppins;
+      color: rgba(54, 38, 28, 0.691);
+      text-shadow: rgb(0, 0, 0);
+      animation: spreadOut 4s ease-out forwards;
+
+    }
+
+    .slogan {
+      margin: 0;
+      font-size: clamp(20px, 3vw, 40px);
+      font-family: Poppins;
+      color: rgba(89, 63, 46, 0.707);
+      font-weight: 600;
+      letter-spacing: 1px;
+      animation: spreadOut 2s ease-out forwards;
+    }
+
+    @keyframes spreadOut {
+      from {
+        letter-spacing: -2px;
+      }
+
+      to {
+        letter-spacing: 1px;
+      }
+    }
+
+    .cards {
+      width: min(1200px, 95%);
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      height: 500px;
+      border-radius: 18px;
+      border: 2px solid white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      text-align: center;
+      font-family: Poppins, sans-serif;
+      font-size: 28px;
+      padding: 24px;
+    }
+
+    .cards2 {
+      width: min(1200px, 95%);
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card--mental {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    .card--academic {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    .card--procrastination {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    .card--social {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    .card--healthy {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    .card--support {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    .card--future {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    .card--confidence {
+      background: #b4aca4c3;
+      color: white;
+    }
+
+    body {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /*Things that ChatGPT wrote*/
+
+    @media (max-width: 1000px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /*-------------------------*/
+  </style>
+  <script>
+
+    window.mental = () => (window.location.href = "mental_health_page.html");
+    window.academic = () => (window.location.href = "academic_health_page.html");
+    window.procrastination = () => (window.location.href = "procrastination_page.html");
+    window.social = () => (window.location.href = "social_health_page.html");
+    window.healthy = () => (window.location.href = "healthy_page.html");
+    window.support = () => (window.location.href = "support_page.html");
+    window.future = () => (window.location.href = "future_support_page.html");
+    window.confidence = () => (window.location.href = "confidence_building_page.html");
+
+  </script>
+  <script>
+    window.addEventListener("load", () => {
+      // If the page was opened with #about or #topics, reset to top
+      if (window.location.hash) {
+        history.replaceState(null, "", window.location.pathname);
+        window.scrollTo(0, 0);
+      }
+    });
+  </script>
+
+</body>
+
+</html>

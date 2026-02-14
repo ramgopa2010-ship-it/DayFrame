@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <title>FUTURE SUPPORT</title>
+
+  <style>
+    :root {
+      --c1: #FFA86B;
+      /* Sandy Brown */
+      --c2: #FFBA78;
+      /* Light Caramel */
+      --c3: #FFCC84;
+      /* Apricot Cream */
+      --c4: #FFD991;
+      /* Navajo White */
+      --c5: #FFE69E;
+      /* Vanilla Custard */
+
+      --ink: #2d2a24;
+      --ink2: rgba(45, 42, 36, .75);
+      --card: #ffffff;
+      --shadow: 0 10px 28px rgba(0, 0, 0, .10);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(var(--c1), var(--c5));
+      min-height: 100vh;
+      padding: 56px 18px 80px;
+      opacity: 0;
+      animation: fadeIn .6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto 22px;
+    }
+
+    .support {
+      margin: 0;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      opacity: .95;
+      color: #111;
+    }
+
+    .mental {
+      margin: 6px 0 0;
+      font-size: clamp(56px, 9vw, 140px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: #111;
+      margin-bottom: 20px;
+    }
+
+    .hero-sub {
+      margin: 14px auto 0;
+      max-width: 900px;
+      color: rgba(17, 17, 17, .75);
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    /* Section Wrap (warm palette panel) */
+    .cialfo-wrap {
+      max-width: 1100px;
+      margin: 34px auto 0;
+      padding: 26px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, var(--c3), var(--c5));
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(0, 0, 0, .06);
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-align: center;
+    }
+
+    .cialfo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .cialfo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Card Base */
+    .soft-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(0, 0, 0, .06);
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .soft-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, .14);
+    }
+
+    /* Accent bar */
+    .soft-card[data-accent="1"] {
+      border-left: 10px solid var(--c1);
+    }
+
+    .soft-card[data-accent="2"] {
+      border-left: 10px solid var(--c2);
+    }
+
+    .soft-card[data-accent="3"] {
+      border-left: 10px solid var(--c3);
+    }
+
+    .soft-card[data-accent="4"] {
+      border-left: 10px solid var(--c4);
+    }
+
+    .soft-card[data-accent="5"] {
+      border-left: 10px solid var(--c5);
+    }
+
+    .soft-card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .soft-card p {
+      margin: 0;
+      color: var(--ink2);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    /* Cialfo button */
+    .cialfo-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+      padding: 12px 18px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform .2s ease, opacity .2s ease;
+      width: fit-content;
+    }
+
+    .cialfo-btn:hover {
+      transform: translateY(-2px);
+      opacity: .92;
+    }
+
+    /* Document hub grid */
+    .doc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 520px) {
+      .doc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .doc-card {
+      display: block;
+      background: linear-gradient(135deg, rgba(255, 186, 120, .55), rgba(255, 230, 158, .55));
+      border: 1px solid rgba(0, 0, 0, .06);
+      color: #111;
+      text-decoration: none;
+      padding: 14px 14px;
+      border-radius: 14px;
+      font-weight: 800;
+      text-align: center;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .doc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .10);
+    }
+
+    /* Pretty checklist */
+    .pretty-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .pretty-checklist label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255, 186, 120, .55), rgba(255, 230, 158, .55));
+      border: 1px solid rgba(0, 0, 0, .06);
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .pretty-checklist label:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .10);
+    }
+
+    .pretty-checklist input[type="checkbox"] {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid rgba(45, 42, 36, .35);
+      background: white;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .pretty-checklist input[type="checkbox"]:checked {
+      background: var(--c1);
+      border-color: rgba(45, 42, 36, .2);
+    }
+
+    .pretty-checklist input[type="checkbox"]:checked::after {
+      content: "✓";
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .pretty-checklist input[type="checkbox"]:checked+span {
+      opacity: .7;
+      text-decoration: line-through;
+    }
+
+    /* Little note */
+    .mini-note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: rgba(45, 42, 36, .70);
+      line-height: 1.6;
+    }
+
+    hr {
+      max-width: 65vw;
+      background-color: var(--c1);
+      height: 3px;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero">
+    <p class="support">Providing Help for</p>
+    <p class="mental">Future Endeavours</p>
+    <hr>
+    <p class="hero-sub">
+      This section helps you manage university applications and preparation in one place:
+      a direct Cialfo launch, a document hub, and a checklist that saves your progress on this device.
+    </p>
+    <hr>
+  </header>
+
+  <section class="cialfo-wrap">
+    <h2 class="section-title">University Applications Hub</h2>
+
+    <div class="cialfo-grid">
+      <!-- Card 1: Cialfo -->
+      <div class="soft-card" data-accent="1">
+        <h3>Cialfo Portal</h3>
+        <p>Track applications, manage deadlines, upload documents, and monitor recommendation letters.</p>
+        <a class="cialfo-btn" href="https://app.cialfo.co/" target="_blank" rel="noopener">Open Cialfo</a>
+        <br>
+        <br>
+        <p class="mini-note">Tip: Keep your passport-name spelling consistent across all platforms.</p>
+      </div>
+
+      <!-- Card 2: Document Hub -->
+      <div class="soft-card" data-accent="2">
+        <h3>Document Hub</h3>
+        <p>Quick shortcuts to the files you’ll use the most.</p>
+
+        <div class="doc-grid">
+          <a href="https://drive.google.com" target="_blank" rel="noopener" class="doc-card">Essays Folder</a>
+          <a href="https://drive.google.com" target="_blank" rel="noopener" class="doc-card">Certificates</a>
+          <a href="https://docs.google.com" target="_blank" rel="noopener" class="doc-card">Resume Template</a>
+          <a href="https://drive.google.com" target="_blank" rel="noopener" class="doc-card">Transcript File</a>
+        </div>
+
+      </div>
+
+      <!-- Card 3: Checklist (full width on grid) -->
+      <div class="soft-card" data-accent="4" style="grid-column: 1 / -1;">
+        <h3>Application Checklist</h3>
+        <p>Tick items as you complete them.</p>
+
+        <ul class="pretty-checklist" id="checklist">
+          <li><label><input type="checkbox"><span>Update personal profile</span></label></li>
+          <li><label><input type="checkbox"><span>Add safe / match / reach universities</span></label></li>
+          <li><label><input type="checkbox"><span>Upload transcripts / predicted grades</span></label></li>
+          <li><label><input type="checkbox"><span>Draft personal statement</span></label></li>
+          <li><label><input type="checkbox"><span>Request recommendation letters</span></label></li>
+          <li><label><input type="checkbox"><span>Review deadlines and submission requirements</span></label></li>
+        </ul>
+
+        <p class="mini-note">
+          Privacy note: this checklist uses your browser’s storage (it stays on this device).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Save checklist progress (localStorage)
+    const boxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+
+    boxes.forEach((box, i) => {
+      const key = "cialfo_check_" + i;
+      box.checked = localStorage.getItem(key) === "true";
+
+      box.addEventListener("change", () => {
+        localStorage.setItem(key, box.checked);
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>MENTAL HEALTH</title>
+
+  <style>
+    :root {
+      --peach: #f4cbc6;
+      --coral: #b6827f;
+      --back: #d7b5b0;
+      --dark: #8b6764;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      padding: 40px 20px;
+      min-height: 100vh;
+      margin-top: 5px;
+    }
+
+    /* Grid Container for Cards */
+    .cards-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 24px;
+      padding: 20px 0;
+    }
+
+    @media (max-width: 500px) {
+      .cards-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card2 {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      min-width: 1370px;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+    }
+
+    .card-header {
+      padding: 24px;
+      background: linear-gradient(135deg, #f4cbc6, #e8b3ae);
+      border-bottom: 1px solid rgba(139, 103, 100, 0.1);
+    }
+
+    .title2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #4a3634;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: #8b6764;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    #batteryContainer {
+      width: 120px;
+      height: 220px;
+      border: 4px solid #333;
+      border-radius: 12px;
+      margin: 0 auto 20px;
+      position: relative;
+      background: #f0f0f0;
+      overflow: visible !important;
+    }
+
+    #batteryContainer::before {
+      content: '';
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 12px;
+      background: #333;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .support {
+      font-family: Poppins;
+      font-size: 50px;
+      font-weight: 500;
+      color: var(--dark);
+      text-align: center;
+      margin-bottom: -20px;
+    }
+
+    .mental {
+      font-family: Poppins;
+      font-size: 150px;
+      color: var(--dark);
+      font-weight: 700;
+      text-align: center;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      animation: spreadOut 3s ease-in forwards;
+    }
+
+    @keyframes spreadOut {
+      from {
+        letter-spacing: -4px;
+      }
+
+      to {
+        letter-spacing: 1px;
+      }
+    }
+
+    .second {
+      display: block;
+    }
+
+    .school {
+      display: block;
+    }
+
+    .input_area {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      color: black;
+      margin-bottom: 20vh;
+      background: var(--peach);
+      padding: 5vh 5vw;
+      max-width: 55vw;
+      border-radius: var(--radius);
+      align-items: center;
+      box-shadow: var(--shadow);
+    }
+
+    .bullying {
+      font-size: 60px;
+      background: white;
+      padding: 5vh 5vw;
+      border-radius: var(--radius);
+      font-family: Poppins;
+      color: var(--dark);
+      margin-bottom: 1vh;
+    }
+
+    .subtitle2 {
+      margin-bottom: 20px;
+      font-size: 15px;
+      max-width: 42vw;
+      color: var(--dark);
+    }
+
+    #messageInput {
+      padding: 20px;
+      border-radius: 10px;
+      font-family: Poppins;
+      font-weight: bold;
+      width: 44vw;
+      height: 20vh;
+      font-size: 20px;
+      border: none;
+      text-align: center;
+    }
+
+    #schoolInput {
+      padding: 20px;
+      margin-top: 2.5vh;
+      border-radius: 10px;
+      font-family: Poppins;
+      font-weight: bold;
+      width: 43.5vw;
+      height: 8vh;
+      font-size: 20px;
+      border: none;
+      text-align: center;
+    }
+
+    #sendBtn {
+      padding: 20px;
+      border-radius: 10px;
+      font-family: Poppins;
+      font-weight: Bold;
+      width: 15vw;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    #numberInput {
+      padding: 20px;
+      border-radius: 10px;
+      font-family: Poppins;
+      font-weight: Bold;
+      width: 26.5vw;
+      margin-left: 2vh;
+      height: 7vh;
+      font-size: 20px;
+      border: none;
+      text-align: center;
+    }
+
+    #nameInput {
+      padding: 15px;
+      border-radius: 10px;
+      width: 43vw;
+      font-family: Poppins;
+      font-weight: bold;
+      font-size: 20px;
+      border: none;
+      text-align: center;
+    }
+
+    #dateInput {
+      padding: 15px;
+      border-radius: 10px;
+      width: 15.5vw;
+      font-family: Poppins;
+      font-weight: bold;
+      height: 7.3vh;
+      font-size: 20px;
+      border: none;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    h4 {
+      font-size: 18px;
+      max-width: 60vw;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    hr {
+      max-width: 65vw;
+      background-color: var(--dark);
+      height: 3px;
+      border: none;
+    }
+
+    body {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body style="background: linear-gradient(135deg, #f4cbc6 0%, #b6827f 100%); min-height: 100vh;">
+  <p class="support">Supporting Your</p>
+  <p class="mental">Social Health</p>
+  <hr>
+
+  <center>
+    <h4>This page adresses the different ways your social health is impacted, such as bullying, peer pressure,
+      targetting,
+      and many more. To help you cope with the stress and emotional pain, this page includes tools like a reporting
+      section, a social battery tracker, anxiety tips, and more.</h4>
+  </center>
+
+  <hr>
+  <br>
+  <br>
+  <br>
+
+  <center>
+    <main class="input_area">
+      <h2 class="bullying">Speak Up</h2>
+      <p class="subtitle2">In this section, you can report any incidents you faced related to bullying, peer pressure,
+        targetting, and more. If needed, you may also give your contact information so that professionals can get in
+        contact with you and help you. </p>
+      <input type="text" id="nameInput" placeholder="Type your name..." />
+      <main class="second">
+        <input type="date" id="dateInput" />
+        <input type="text" id="numberInput" placeholder="Type your contact (Email or Phone)">
+        <main class="school">
+          <input type="text" id="schoolInput" placeholder="Type your School / College name">
+        </main>
+      </main>
+      <input type="text" id="messageInput" placeholder="Type something..." />
+      <button id="sendBtn">Send</button>
+    </main>
+  </center>
+
+
+  <div class="cards-container">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="title2">Social Battery Tracker</h2>
+        <p class="subtitle">How much social energy do you have right now?</p>
+      </div>
+      <div class="card-body">
+
+        <div style="text-align: center; margin: 30px 0;">
+          <div id="batteryContainer">
+
+            <div id="batteryFill" style="
+              position: absolute;
+              bottom: 0;
+              width: 100%;
+              height: 50%;
+              background: linear-gradient(to top, #4ade80, #22c55e);
+              transition: all 0.5s ease;
+            "></div>
+            <div id="batteryPercent" style="
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              font-size: 36px;
+              font-weight: bold;
+              color: #333;
+              z-index: 10;
+            ">50%</div>
+          </div>
+
+          <input type="range" id="socialBattery" min="0" max="100" value="50" style="width: 100%; margin: 20px 0;">
+
+          <div id="batteryAdvice" style="
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(74, 222, 128, 0.1);
+            border-left: 4px solid #22c55e;
+            border-radius: 8px;
+            text-align: left;
+          ">Move the slider to see suggestions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="title2">Friendship Check-In</h2>
+        <p class="subtitle">Keep track of your connections</p>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 20px;">
+          <input type="text" id="friendName" placeholder="Friend's name" style="
+        width: calc(100% - 120px);
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        margin-right: 10px;
+      ">
+          <button onclick="addFriend()" style="
+        padding: 12px 24px;
+        background: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        margin-top: 10px;
+      ">Add Friend</button>
+        </div>
+
+        <div id="friendsList"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="title2">Social Anxiety Tips</h2>
+        <p class="subtitle">Quick techniques to calm your nerves</p>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 20px;">
+          <button onclick="show5432Technique()" style="
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 10px;
+      ">5-4-3-2-1 Grounding Exercise</button>
+
+          <button onclick="showBreathingTip()" style="
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #06b6d4, #0891b2);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 10px;
+      ">Quick Breathing Reset</button>
+
+          <button onclick="showAffirmation()" style="
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      ">You Can Do This! Affirmation</button>
+        </div>
+
+        <div id="anxietyTip" style="
+      padding: 24px;
+      background: rgba(139, 92, 246, 0.1);
+      border-left: 4px solid #8b5cf6;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.8;
+      display: none;
+    "></div>
+      </div>
+    </div>
+
+    <div class="card2">
+      <div class="card-header">
+        <h2 class="title2">Boundary Setting Practice</h2>
+        <p class="subtitle">Learn to say no and set healthy limits</p>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 20px;">
+          <label style="font-weight: 600; margin-bottom: 8px; display: block;">Pick a scenario:</label>
+          <select id="boundaryScenario" onchange="showBoundaryScript()" style="
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 15px;
+      ">
+            <option value="">-- Select a situation --</option>
+            <option value="decline_hangout">Declining a hangout when you're tired</option>
+            <option value="say_no_favor">Saying no to a favor you can't do</option>
+            <option value="leave_conversation">Leaving an uncomfortable conversation</option>
+            <option value="end_toxic">Ending a toxic friendship</option>
+            <option value="ask_for_space">Asking for personal space</option>
+            <option value="decline_pressure">Declining peer pressure</option>
+          </select>
+        </div>
+
+        <div id="boundaryScript" style="display: none;"></div>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <script>
+    let socialBatteryLevel = parseInt(localStorage.getItem('socialBattery')) || 50;
+
+    const batterySlider = document.getElementById('socialBattery');
+    const batteryFill = document.getElementById('batteryFill');
+    const batteryPercent = document.getElementById('batteryPercent');
+    const batteryAdvice = document.getElementById('batteryAdvice');
+
+    batterySlider.value = socialBatteryLevel;
+
+    function getBatteryColor(level) {
+      if (level <= 20) return 'linear-gradient(to top, #ef4444, #dc2626)'; // Red
+      if (level <= 50) return 'linear-gradient(to top, #f59e0b, #d97706)'; // Orange
+      return 'linear-gradient(to top, #4ade80, #22c55e)'; // Green
+    }
+
+    function getBatteryAdvice(level) {
+      if (level <= 20) {
+        return "Your battery is critically low. Time to recharge! Take some alone time, do something you love, or just rest. Social interactions can wait.";
+      }
+      if (level <= 40) {
+        return "You're running low on energy. Consider limiting social interactions to close friends or taking breaks between hangouts.";
+      }
+      if (level <= 60) {
+        return "You're at a comfortable level. You can handle moderate socializing, but don't overcommit.";
+      }
+      if (level <= 80) {
+        return "Great energy! You're ready for social activities. This is a good time to reach out to friends or join group events.";
+      }
+      return "You're fully charged! Perfect time for parties, group hangouts, or meeting new people. Make the most of it!";
+    }
+
+    function updateBattery() {
+      socialBatteryLevel = parseInt(batterySlider.value);
+
+      batteryFill.style.height = socialBatteryLevel + '%';
+      batteryFill.style.background = getBatteryColor(socialBatteryLevel);
+      batteryPercent.textContent = socialBatteryLevel + '%';
+      batteryAdvice.textContent = getBatteryAdvice(socialBatteryLevel);
+
+      // Change advice box color
+      if (socialBatteryLevel <= 20) {
+        batteryAdvice.style.background = 'rgba(239, 68, 68, 0.1)';
+        batteryAdvice.style.borderLeftColor = '#dc2626';
+      } else if (socialBatteryLevel <= 50) {
+        batteryAdvice.style.background = 'rgba(245, 158, 11, 0.1)';
+        batteryAdvice.style.borderLeftColor = '#d97706';
+      } else {
+        batteryAdvice.style.background = 'rgba(74, 222, 128, 0.1)';
+        batteryAdvice.style.borderLeftColor = '#22c55e';
+      }
+
+      localStorage.setItem('socialBattery', socialBatteryLevel);
+    }
+
+    batterySlider.addEventListener('input', updateBattery);
+    updateBattery(); // Initialize
+  </script>
+
+
+
+
+  <script>
+    let friends = JSON.parse(localStorage.getItem('friendsList')) || [];
+
+    function addFriend() {
+      const nameInput = document.getElementById('friendName');
+      const name = nameInput.value.trim();
+
+      if (!name) {
+        alert('Please enter a name!');
+        return;
+      }
+
+      const newFriend = {
+        id: Date.now(),
+        name: name,
+        lastContact: null
+      };
+
+      friends.push(newFriend);
+      localStorage.setItem('friendsList', JSON.stringify(friends));
+      nameInput.value = '';
+      renderFriends();
+    }
+
+    function markContacted(id) {
+      const friend = friends.find(f => f.id === id);
+      if (friend) {
+        friend.lastContact = new Date().toISOString();
+        localStorage.setItem('friendsList', JSON.stringify(friends));
+        renderFriends();
+      }
+    }
+
+    function deleteFriend(id) {
+      if (confirm('Remove this friend from your list?')) {
+        friends = friends.filter(f => f.id !== id);
+        localStorage.setItem('friendsList', JSON.stringify(friends));
+        renderFriends();
+      }
+    }
+
+    function daysSinceContact(dateString) {
+      if (!dateString) return null;
+
+      const lastContact = new Date(dateString);
+      const today = new Date();
+      const diffTime = Math.abs(today - lastContact);
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      return diffDays;
+    }
+
+    function getContactMessage(days) {
+      if (days === null) return 'No contact yet';
+      if (days === 0) return 'Contacted today! ';
+      if (days === 1) return 'Contacted yesterday';
+      if (days <= 7) return `${days} days ago`;
+      if (days <= 14) return `${days} days ago - Maybe reach out soon?`;
+      return `${days} days ago - It's been a while! 📱`;
+    }
+
+    function renderFriends() {
+      const container = document.getElementById('friendsList');
+
+      if (friends.length === 0) {
+        container.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Add friends to start tracking connections!</p>';
+        return;
+      }
+
+      container.innerHTML = friends.map(friend => {
+        const days = daysSinceContact(friend.lastContact);
+        const message = getContactMessage(days);
+        const isOverdue = days !== null && days > 14;
+
+        return `
+      <div style="
+        padding: 16px;
+        margin-bottom: 12px;
+        background: ${isOverdue ? 'rgba(239, 68, 68, 0.05)' : 'rgba(59, 130, 246, 0.05)'};
+        border-left: 4px solid ${isOverdue ? '#ef4444' : '#3b82f6'};
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      ">
+        <div>
+          <h4 style="margin: 0 0 8px; font-size: 18px;">${friend.name}</h4>
+          <p style="margin: 0; font-size: 14px; color: #666;">${message}</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button onclick="markContacted(${friend.id})" style="
+            padding: 8px 16px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+          ">Reached Out</button>
+          <button onclick="deleteFriend(${friend.id})" style="
+            padding: 8px 16px;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+          ">Remove</button>
+        </div>
+      </div>
+    `;
+      }).join('');
+    }
+
+    renderFriends();
+  </script>
+
+
+
+
+  <script>
+    const anxietyTip = document.getElementById('anxietyTip');
+
+    function show5432Technique() {
+      anxietyTip.style.display = 'block';
+      anxietyTip.innerHTML = `
+    <h3 style="margin-top: 0; color: #8b5cf6;">5-4-3-2-1 Grounding Technique</h3>
+    <p><strong>Look around and name:</strong></p>
+    <ul style="margin: 16px 0;">
+      <li><strong>5 things you can see</strong> (a pen, a chair, the ceiling...)</li>
+      <li><strong>4 things you can touch</strong> (your shirt, the wall, your phone...)</li>
+      <li><strong>3 things you can hear</strong> (birds, traffic, breathing...)</li>
+      <li><strong>2 things you can smell</strong> (coffee, fresh air...)</li>
+      <li><strong>1 thing you can taste</strong> (gum, water, lunch...)</li>
+    </ul>
+    <p style="font-style: italic; color: #666;">This brings you back to the present moment and out of your anxious thoughts.</p>
+  `;
+    }
+
+    function showBreathingTip() {
+      anxietyTip.style.display = 'block';
+      anxietyTip.innerHTML = `
+    <h3 style="margin-top: 0; color: #06b6d4;">Box Breathing (4-4-4-4)</h3>
+    <p><strong>Follow this pattern:</strong></p>
+    <ol style="margin: 16px 0; font-size: 16px;">
+      <li>Breathe IN for 4 seconds</li>
+      <li>HOLD for 4 seconds</li>
+      <li>Breathe OUT for 4 seconds</li>
+      <li>HOLD (empty lungs) for 4 seconds</li>
+    </ol>
+    <p><strong>Repeat 3-5 times.</strong></p>
+    <p style="font-style: italic; color: #666;">This slows your heart rate and activates your calm response.</p>
+  `;
+    }
+
+    function showAffirmation() {
+      const affirmations = [
+        "You've handled social situations before, and you can handle this one too.",
+        "It's okay to feel nervous. Everyone feels this way sometimes.",
+        "You don't have to be perfect. Just being yourself is enough.",
+        "This feeling will pass. Anxiety is temporary.",
+        "You are braver than you think.",
+        "Small talk is hard for everyone. You're not alone.",
+        "It's okay to take breaks and step away when you need to.",
+        "You're allowed to set boundaries and say no.",
+        "Your presence matters, even if you're quiet.",
+        "Progress, not perfection. Every attempt is growth."
+      ];
+
+      const random = affirmations[Math.floor(Math.random() * affirmations.length)];
+
+      anxietyTip.style.display = 'block';
+      anxietyTip.innerHTML = `
+    <h3 style="margin-top: 0; color: #10b981;">Remember This</h3>
+    <p style="font-size: 20px; font-weight: 600; color: #333; margin: 20px 0;">"${random}"</p>
+    <button onclick="showAffirmation()" style="
+      padding: 10px 20px;
+      background: #10b981;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    ">Show Another</button>
+  `;
+    }
+  </script>
+
+
+
+  <script>
+    const boundaryScripts = {
+      decline_hangout: {
+        title: "Declining a Hangout When You're Tired",
+        script: `
+      <p><strong>💬 What to say:</strong></p>
+      <div style="background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 8px; margin: 12px 0;">
+        "Thanks for inviting me! I'm really tired today and need to recharge. Can we reschedule for [specific day]?"
+      </div>
+      <p><strong>Why it works:</strong> You're being honest and offering an alternative, showing you still value the friendship.</p>
+      <p><strong>Remember:</strong> You don't owe anyone an explanation beyond "I need rest." It's okay to prioritize your energy.</p>
+    `
+      },
+      say_no_favor: {
+        title: "Saying No to a Favor You Can't Do",
+        script: `
+      <p><strong>💬 What to say:</strong></p>
+      <div style="background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 8px; margin: 12px 0;">
+        "I wish I could help, but I don't have the time/resources right now. I hope you can find someone who can!"
+      </div>
+      <p><strong>Why it works:</strong> You're being direct but kind. You're not making excuses or over-explaining.</p>
+      <p><strong>Remember:</strong> "No" is a complete sentence. You don't have to justify your limits.</p>
+    `
+      },
+      leave_conversation: {
+        title: "Leaving an Uncomfortable Conversation",
+        script: `
+      <p><strong>💬 What to say:</strong></p>
+      <div style="background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 8px; margin: 12px 0;">
+        "I'm not comfortable talking about this. Let's change the subject." <br>
+        <em>Or if you need to leave:</em> "I need to go, but I'll catch you later."
+      </div>
+      <p><strong>Why it works:</strong> You're asserting your boundary clearly without being rude.</p>
+      <p><strong>Remember:</strong> You can always physically remove yourself. Your comfort matters.</p>
+    `
+      },
+      end_toxic: {
+        title: "Ending a Toxic Friendship",
+        script: `
+      <p><strong>💬 What to say:</strong></p>
+      <div style="background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 8px; margin: 12px 0;">
+        "I've realized this friendship isn't healthy for me anymore. I need to step back and focus on myself. I wish you well."
+      </div>
+      <p><strong>Why it works:</strong> You're being direct and final. You're not leaving room for negotiation.</p>
+      <p><strong>Remember:</strong> You don't need to explain in detail. Sometimes distance is the answer, and that's okay.</p>
+    `
+      },
+      ask_for_space: {
+        title: "Asking for Personal Space",
+        script: `
+      <p><strong>💬 What to say:</strong></p>
+      <div style="background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 8px; margin: 12px 0;">
+        "I need some alone time to recharge. It's not about you—I just need space to feel like myself again."
+      </div>
+      <p><strong>Why it works:</strong> You're being honest and reassuring them it's not personal.</p>
+      <p><strong>Remember:</strong> Needing space is normal and healthy. Don't feel guilty for taking care of yourself.</p>
+    `
+      },
+      decline_pressure: {
+        title: "Declining Peer Pressure",
+        script: `
+      <p><strong>💬 What to say:</strong></p>
+      <div style="background: rgba(99, 102, 241, 0.1); padding: 16px; border-radius: 8px; margin: 12px 0;">
+        "That's not for me." <br>
+        <em>Or:</em> "I'm good, thanks." <br>
+        <em>If they push:</em> "I said no. Please respect that."
+      </div>
+      <p><strong>Why it works:</strong> Short, firm, and unapologetic. You're not making excuses.</p>
+      <p><strong>Remember:</strong> Real friends respect your choices. If they don't, they're not your people.</p>
+    `
+      }
+    };
+
+    function showBoundaryScript() {
+      const select = document.getElementById('boundaryScenario');
+      const container = document.getElementById('boundaryScript');
+      const scenario = select.value;
+
+      if (!scenario) {
+        container.style.display = 'none';
+        return;
+      }
+
+      const data = boundaryScripts[scenario];
+      container.style.display = 'block';
+      container.innerHTML = `
+    <div style="
+      padding: 24px;
+      background: white;
+      border: 2px solid #6366f1;
+      border-radius: 12px;
+    ">
+      <h3 style="margin-top: 0; color: #6366f1;">${data.title}</h3>
+      ${data.script}
+      <div style="
+        margin-top: 20px;
+        padding: 16px;
+        background: rgba(16, 185, 129, 0.1);
+        border-left: 4px solid #10b981;
+        border-radius: 8px;
+      ">
+        <strong>💚 You've got this!</strong> Setting boundaries gets easier with practice.
+      </div>
+    </div>
+  `;
+    }
+  </script>
+
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+    import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_KEY",
+      authDomain: "dayframe-318d5.firebaseapp.com",
+      projectId: "dayframe-318d5",
+      storageBucket: "dayframe-318d5.firebasestorage.app",
+      messagingSenderId: "427518933468",
+      appId: "1:427518933468:web:18233aacfb3bcbf886f719",
+      measurementId: "G-4K6ZVVRRYY"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+    const db = getFirestore(app);
+
+    // ────────────────────────────────────────────────
+    // Get all input elements
+    // ────────────────────────────────────────────────
+    const nameInput = document.getElementById("nameInput");
+    const dateInput = document.getElementById("dateInput");
+    const messageInput = document.getElementById("messageInput");
+    const numberInput = document.getElementById("numberInput");
+    const schoolInput = document.getElementById("schoolInput");
+    const sendBtn = document.getElementById("sendBtn");
+
+    sendBtn.addEventListener("click", async () => {
+      // Get current values
+      const name = nameInput.value.trim();
+      const date = dateInput.value;           // will be "YYYY-MM-DD" or empty
+      const message = messageInput.value.trim();
+      const number = numberInput.value.trim();
+      const school = schoolInput.value.trim();
+
+      // Basic validation
+      if (!message) {
+        alert("Please write something in the message field.");
+        return;
+      }
+
+      try {
+        // Send all fields together in one document
+        const docRef = await addDoc(collection(db, "mental-health-entries"), {
+          name: name || "(anonymous)",          // fallback if empty
+          date: date || new Date().toISOString().split("T")[0],  // today if empty
+          contact: number || "False",
+          school_or_college: school,
+          message: message,
+          createdAt: new Date(),                // server timestamp alternative
+          timestamp: Date.now()                 // client-side unix ms
+        });
+
+        console.log("✅ Document written with ID:", docRef.id);
+
+        // Clear inputs after success
+        nameInput.value = "";
+        dateInput.value = "";
+        messageInput.value = "";
+        numberInput.value = "";
+        schoolInput.value = "";
+
+        // Optional: visual feedback
+        sendBtn.textContent = "Sent!";
+        setTimeout(() => { sendBtn.textContent = "Send to Firebase"; }, 2000);
+
+      } catch (e) {
+        console.error("❌ Firestore write failed:", e);
+        alert("Failed to send. Check console (F12) for details.");
+      }
+    });
+  </script>
+
+</body>

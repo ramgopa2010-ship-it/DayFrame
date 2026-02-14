@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>MENTAL HEALTH</title>
+  <style>
+    :root {
+      --bg-1: #EDF2FB;
+      --bg-2: #E2EAFC;
+      --bg-3: #D7E3FC;
+      --bg-4: #CCDBFD;
+      --bg-5: #C1D3FE;
+      --bg-6: #B6CCFE;
+      --bg-7: #ABC4FF;
+      --text: #2b2d42;
+      --text-light: #6c757d;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      --radius: 16px;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: linear-gradient(var(--bg-7), var(--bg-2));
+      color: var(--text);
+      min-height: 100vh;
+      padding: 22px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(171, 196, 255, 0.3);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 20px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .card-header {
+      padding: 20px;
+      background: linear-gradient(135deg, var(--bg-6), var(--bg-7));
+      border-bottom: 1px solid rgba(171, 196, 255, 0.3);
+    }
+
+    .title2 {
+      margin: 0;
+      font-size: 24px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--text-light);
+      font-size: 14px;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 12px 0 8px;
+    }
+
+    input[type="date"],
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid var(--bg-6);
+      background: white;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--bg-7);
+      box-shadow: 0 0 0 4px rgba(171, 196, 255, 0.2);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: linear-gradient(135deg, var(--bg-6), var(--bg-7));
+      color: var(--text);
+      margin-top: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(171, 196, 255, 0.4);
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, #f28b82, #f5908a);
+      color: white;
+    }
+
+    .btn.danger:hover {
+      box-shadow: 0 8px 20px rgba(242, 139, 130, 0.4);
+    }
+
+    .journal-entry-item {
+      margin-bottom: 12px;
+      border-radius: 12px;
+      background: white;
+      border: 2px solid var(--bg-5);
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .journal-entry-header {
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+      transition: background 0.3s;
+    }
+
+    .journal-entry-header:hover {
+      background: linear-gradient(135deg, var(--bg-3), var(--bg-4));
+    }
+
+    .journal-entry-info {
+      flex: 1;
+    }
+
+    .journal-entry-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .journal-entry-date {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .journal-entry-toggle {
+      font-size: 24px;
+      color: var(--bg-7);
+      transition: transform 0.3s;
+      margin-right: 10px;
+    }
+
+    .journal-entry-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    .journal-entry-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      padding: 0 16px;
+    }
+
+    .journal-entry-content.open {
+      max-height: 1000px;
+      padding: 16px;
+    }
+
+    .journal-entry-text {
+      margin: 0 0 16px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      color: var(--text);
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, #f28b82, #f5908a);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .delete-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(242, 139, 130, 0.4);
+    }
+
+    .cheer {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    #cheerBtn {
+      background: linear-gradient(135deg, var(--bg-5), var(--bg-7));
+      color: var(--text);
+      border: 2px solid var(--bg-7);
+      transition: all 0.3s;
+      padding: 10vh 20vw;
+      font-size: 30px;
+      font-family: Poppins;
+      font-weight: 750;
+      margin-top: 10vh;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    #cheerBtn:hover {
+      background: linear-gradient(135deg, var(--bg-6), var(--bg-7));
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(171, 196, 255, 0.5);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 20px 16px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .support {
+      font-family: Poppins, sans-serif;
+      font-weight: 500;
+      font-size: 2.8rem;
+      margin: 0 0 8px;
+      color: var(--text);
+      opacity: 0.9;
+    }
+
+    .mental {
+      font-family: Poppins, sans-serif;
+      font-weight: 900;
+      font-size: clamp(4.5rem, 12vw, 9rem);
+      line-height: 0.92;
+      margin: 0 0 24px;
+      letter-spacing: -1px;
+      color: var(--text);
+      animation: spreadOut 3.2s ease-out forwards;
+      margin-bottom: 60px;
+    }
+
+    .about {
+      font-family: Poppins, sans-serif;
+      font-size: 1.18rem;
+      line-height: 1.6;
+      max-width: 720px;
+      margin: 0 auto 16px;
+      color: var(--text);
+      opacity: 0.92;
+    }
+
+    .about strong {
+      color: var(--text);
+    }
+
+    hr {
+      margin: 24px auto;
+      width: 800px;
+      border: none;
+      border-top: 2px solid rgb(88, 100, 129);
+    }
+
+    @keyframes spreadOut {
+      from {
+        letter-spacing: 4px;
+      }
+
+      to {
+        letter-spacing: 1px;
+      }
+    }
+
+    body {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<div class="hero">
+  <p class="support">Strengthen Your</p>
+  <h1 class="mental">Mental Health</h1>
+  <hr>
+  <p class="about">
+    This page is all about <b>supporting your mental health</b>. It offers a myriad of methods you can utilise to calm
+    yourself when <b>feelings break loose</b>. It includes many <b>daily affirmations</b>, a <b>5-5-5</b> breathing
+    technique, a <b>diary</b> for all your thoughts, and a <b>guided pause.</b>
+  </p>
+  <hr>
+</div>
+
+<div class="card" style="grid-column: 1 / -1;">
+  <div class="card-header">
+    <h2 class="title2">Daily Affirmation</h2>
+    <p class="subtitle">A reminder to be kind to yourself</p>
+  </div>
+  <div class="card-body">
+    <div id="affirmation" style="
+      text-align: center;
+      padding: 30px;
+      font-size: 22px;
+      line-height: 1.6;
+      font-style: italic;
+      background: rgba(0, 0, 0, .18);
+      border-radius: 12px;
+      border-left: 4px solid rgb(133, 113, 174);
+    "></div>
+    <button class="btn" onclick="newAffirmation()" style="background: rgb(133, 113, 174); margin-top: 15px;">New
+      Affirmation</button>
+  </div>
+</div>
+
+<div class="card" style="grid-column: 1 / -1;">
+  <div class="card-header">
+    <h2 class="title2">5-5-5 Breathing Exercise</h2>
+    <p class="subtitle">Breathe in for 5s, hold for 5s, exhale for 5s</p>
+  </div>
+  <div class="card-body">
+    <div style="text-align: center; padding: 40px 20px;">
+      <div id="breathingCircle" style="
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 30px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgb(133, 113, 174), rgb(179, 156, 241));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 5s ease-in-out;
+        box-shadow: 0 0 40px rgba(133, 113, 174, 0.5);
+      ">
+        <span id="breathingText" style="font-size: 24px; font-weight: bold;">Ready</span>
+      </div>
+      <br>
+      <p id="breathingCount" style="font-size: 48px; font-weight: bold; margin: 20px 0;">5</p>
+      <br>
+      <button class="btn" id="startBreathing" onclick="startBreathing()" style="background: rgb(133, 113, 174);">Start
+        Exercise</button>
+      <button class="btn danger" id="stopBreathing" onclick="stopBreathing()"
+        style="display: none; margin-top: 10px;">Stop</button>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="grid-column: 1 / -1;">
+  <div class="card-header">
+    <h2 class="title2">Daily Journal</h2>
+    <p class="subtitle">Reflect on your day and track your thoughts</p>
+  </div>
+  <div class="card-body">
+    <label for="journalDate">Date</label>
+    <input type="date" id="journalDate" style="margin-bottom: 10px;">
+
+    <label for="journalTitle">Title (optional)</label>
+    <input type="text" id="journalTitle" placeholder="Today's entry..." style="margin-bottom: 10px;">
+
+    <label for="journalEntry">How are you feeling today?</label>
+    <textarea id="journalEntry" placeholder="Write your thoughts here..." style="
+      width: 100%;
+      min-height: 150px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      resize: vertical;
+      margin-bottom: 10px;
+    "></textarea>
+
+    <button class="btn" onclick="saveJournal()" style="background: rgb(133, 113, 174);">Save Entry</button>
+
+    <div id="journalEntries" style="margin-top: 30px;">
+      <h3 style="font-size: 18px; margin-bottom: 15px;">Past Entries</h3>
+      <div id="entriesList"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card" style="grid-column: 1 / -1;">
+  <div class="card-header">
+    <h2 class="title2">Guided Pause</h2>
+    <p class="subtitle">Take 15 minutes for yourself - meditate, stretch, or just breathe</p>
+  </div>
+  <div class="card-body">
+    <div style="text-align: center; padding: 40px 20px;">
+      <div style="font-size: 72px; font-weight: bold; margin: 30px 0;" id="pauseTimer">15:00</div>
+
+      <button class="btn" id="startPause" onclick="startPause()" style="background: rgb(133, 113, 174);">Start
+        Pause</button>
+      <button class="btn danger" id="stopPause" onclick="stopPause()"
+        style="display: none; margin-top: 10px;">Stop</button>
+
+      <p id="pauseMessage" style="margin-top: 20px; font-size: 18px; color: var(--muted);"></p>
+    </div>
+  </div>
+</div>
+
+
+
+
+</div>
+</main>
+
+<script>
+  let breathingInterval;
+  let breathingPhase = 0; // 0: inhale, 1: hold, 2: exhale
+  let breathingTimer = 5;
+  let breathingActive = false;
+
+  function startBreathing() {
+    breathingActive = true;
+    breathingPhase = 0;
+    breathingTimer = 5;
+
+    document.getElementById('startBreathing').style.display = 'none';
+    document.getElementById('stopBreathing').style.display = 'inline-block';
+
+    runBreathingCycle();
+  }
+
+  function runBreathingCycle() {
+    if (!breathingActive) return;
+
+    const phases = ['Breathe In', 'Hold', 'Breathe Out'];
+    const circle = document.getElementById('breathingCircle');
+
+    document.getElementById('breathingText').textContent = phases[breathingPhase];
+
+    // Animate circle
+    if (breathingPhase === 0) {
+      circle.style.transform = 'scale(1.5)';
+    } else if (breathingPhase === 1) {
+      circle.style.transform = 'scale(1.5)';
+    } else {
+      circle.style.transform = 'scale(1)';
+    }
+
+    breathingTimer = 5;
+
+    breathingInterval = setInterval(() => {
+      breathingTimer--;
+      document.getElementById('breathingCount').textContent = breathingTimer;
+
+      if (breathingTimer === 0) {
+        clearInterval(breathingInterval);
+        breathingPhase = (breathingPhase + 1) % 3;
+        setTimeout(runBreathingCycle, 500);
+      }
+    }, 1000);
+  }
+
+  function stopBreathing() {
+    breathingActive = false;
+    clearInterval(breathingInterval);
+    document.getElementById('breathingCircle').style.transform = 'scale(1)';
+    document.getElementById('breathingText').textContent = 'Ready';
+    document.getElementById('breathingCount').textContent = '5';
+    document.getElementById('startBreathing').style.display = 'inline-block';
+    document.getElementById('stopBreathing').style.display = 'none';
+  }
+</script>
+
+
+
+<script>
+  let journalEntries = JSON.parse(localStorage.getItem('journalEntries')) || [];
+
+  function loadJournalDate() {
+    const now = new Date();
+    const dateStr = now.toISOString().split('T')[0];
+    document.getElementById('journalDate').value = dateStr;
+  }
+
+  function saveJournal() {
+    const date = document.getElementById('journalDate').value;
+    const title = document.getElementById('journalTitle').value;
+    const entry = document.getElementById('journalEntry').value;
+
+    if (!date || !entry) {
+      alert('Please fill in the date and entry!');
+      return;
+    }
+
+    const newEntry = {
+      id: Date.now(),
+      date: date,
+      title: title || 'Untitled Entry',
+      content: entry,
+      timestamp: new Date().toISOString()
+    };
+
+    journalEntries.unshift(newEntry); // Add to beginning
+    localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+
+    // Clear form
+    document.getElementById('journalTitle').value = '';
+    document.getElementById('journalEntry').value = '';
+
+    renderJournalEntries();
+    alert('Journal entry saved! ✨');
+  }
+
+  function deleteJournalEntry(id) {
+    if (confirm('Delete this entry?')) {
+      journalEntries = journalEntries.filter(e => e.id !== id);
+      localStorage.setItem('journalEntries', JSON.stringify(journalEntries));
+      renderJournalEntries();
+    }
+  }
+
+  function renderJournalEntries() {
+    const container = document.getElementById('entriesList');
+
+    if (journalEntries.length === 0) {
+      container.innerHTML = '<p style="color: var(--text-light); text-align: center; padding: 20px;">No entries yet. Start writing!</p>';
+      return;
+    }
+
+    container.innerHTML = journalEntries.map(entry => `
+    <div class="journal-entry-item">
+      <div class="journal-entry-header" onclick="toggleEntry(${entry.id})">
+        <div class="journal-entry-info">
+          <h4 class="journal-entry-title">${entry.title}</h4>
+          <p class="journal-entry-date">${entry.date}</p>
+        </div>
+        <span class="journal-entry-toggle" id="toggle-${entry.id}">▼</span>
+      </div>
+      <div class="journal-entry-content" id="content-${entry.id}">
+        <p class="journal-entry-text">${entry.content}</p>
+        <button class="delete-btn" onclick="deleteJournalEntry(${entry.id})">Delete Entry</button>
+      </div>
+    </div>
+  `).join('');
+  }
+
+  function toggleEntry(id) {
+    const content = document.getElementById(`content-${id}`);
+    const toggle = document.getElementById(`toggle-${id}`);
+
+    content.classList.toggle('open');
+    toggle.classList.toggle('open');
+  }
+
+  container.innerHTML = journalEntries.map(entry => `
+    <div style="
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, .18);
+      border: 1px solid rgba(255, 255, 255, .14);
+    ">
+      <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+        <div>
+          <h4 style="margin: 0; font-size: 16px;">${entry.title}</h4>
+          <p style="margin: 5px 0 0; font-size: 12px; color: var(--muted);">${entry.date}</p>
+        </div>
+        <button onclick="deleteJournalEntry(${entry.id})" style="
+          background: rgba(239, 68, 68, .7);
+          color: white;
+          border: none;
+          padding: 6px 12px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 12px;
+        ">Delete</button>
+      </div>
+      <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${entry.content}</p>
+    </div>
+  `).join('');
+
+
+  // Initialize
+  loadJournalDate();
+  renderJournalEntries();
+</script>
+
+
+<script>
+  let pauseInterval;
+  let pauseTimeLeft = 15 * 60; // 15 minutes in seconds
+  let pauseActive = false;
+
+  function startPause() {
+    pauseActive = true;
+    pauseTimeLeft = 15 * 60;
+
+    document.getElementById('startPause').style.display = 'none';
+    document.getElementById('stopPause').style.display = 'inline-block';
+    document.getElementById('pauseMessage').textContent = 'Take this time for yourself...';
+
+    pauseInterval = setInterval(() => {
+      pauseTimeLeft--;
+      updatePauseDisplay();
+
+      if (pauseTimeLeft === 0) {
+        stopPause();
+        alert('🌟 Your 15-minute pause is complete! Well done taking time for yourself.');
+      }
+    }, 1000);
+  }
+
+  function stopPause() {
+    pauseActive = false;
+    clearInterval(pauseInterval);
+    pauseTimeLeft = 15 * 60;
+    updatePauseDisplay();
+
+    document.getElementById('startPause').style.display = 'inline-block';
+    document.getElementById('stopPause').style.display = 'none';
+    document.getElementById('pauseMessage').textContent = '';
+  }
+
+  function updatePauseDisplay() {
+    const mins = Math.floor(pauseTimeLeft / 60);
+    const secs = pauseTimeLeft % 60;
+    document.getElementById('pauseTimer').textContent =
+      `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+</script>
+
+
+<script>
+  const affirmations = [
+    "You are enough, exactly as you are.",
+    "It's okay to take things one day at a time.",
+    "Your feelings are valid and deserve to be acknowledged.",
+    "Progress, not perfection.",
+    "You're doing better than you think.",
+    "Rest is productive too.",
+    "You deserve compassion, especially from yourself.",
+    "Small steps are still steps forward.",
+    "It's okay to ask for help.",
+    "Your mental health matters.",
+    "You are not your thoughts.",
+    "Be patient with yourself - growth takes time.",
+    "You're allowed to take up space.",
+    "Your journey is your own.",
+    "Healing isn't linear, and that's okay."
+  ];
+
+  function newAffirmation() {
+    const randomIndex = Math.floor(Math.random() * affirmations.length);
+    document.getElementById('affirmation').textContent = `"${affirmations[randomIndex]}"`;
+  }
+
+  // Show random affirmation on load
+  newAffirmation();
+</script>
+
+</body>

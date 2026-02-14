@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>SUPPORT AND GUIDANCE</title>
+
+  <style>
+    :root {
+      --text: #b3a462;
+      --font: Poppins;
+      --text2: #7d7245;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .guidance-section {
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 20px;
+      text-align: center;
+      font-family: Poppins;
+    }
+
+    .section-title {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      margin-bottom: 40px;
+      opacity: 0.8;
+    }
+
+    /* 2x2 Grid */
+    .guidance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* Cards */
+    .guidance-card {
+      background: white;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      text-align: left;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .guidance-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Slight highlight for urgent */
+    .urgent-card {
+      border-left: 6px solid rgb(90, 69, 67);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .guidance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .support {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 50px;
+      text-align: center;
+      font-family: Poppins;
+      margin-bottom: 0px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .mental {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 200px;
+      text-align: center;
+      margin-top: 10px;
+      font-family: Poppins;
+      font-weight: 700;
+      line-height: 0.9;
+      margin-bottom: 50px;
+      color: var(--text);
+      animation: spreadOut 3s ease-in forwards;
+    }
+
+    @keyframes spreadOut {
+      from {
+        letter-spacing: -5px;
+      }
+
+      to {
+        letter-spacing: 1px;
+      }
+    }
+
+    hr {
+      width: 100vh;
+      height: 3px;
+      background-color: var(--text);
+      border: none;
+    }
+
+    .about {
+      margin-top: 20px;
+      text-align: center;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-family: var(--font);
+      color: var(--text2);
+    }
+
+
+    body {
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards;
+      margin-top: 70px;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+
+</head>
+
+<body style="background-image: linear-gradient(#FAE588, #FCEFB4); min-height: 1800px;">
+  <p class="support">Someone You</p>
+  <p class="mental">Can Trust</p>
+  <hr>
+  <p class="about"> This page focuses on providing support and contact information of organizations and individuals you
+    can
+    use. When you
+    feel like you're alone, overwhelmed, or unsafe, you can contact the organizations mentioned here.</p>
+  <hr>
+
+  <section class="guidance-section">
+
+    <h2 class="section-title">Proper Guidance & Support</h2>
+    <p class="section-subtitle">
+      You don’t have to handle this alone. Here are safe next steps.
+    </p>
+
+    <div class="guidance-grid">
+
+      <div class="guidance-card">
+        <h3>Talk to Someone You Trust</h3>
+        <p>
+          Speak to a parent, teacher, mentor, or trusted adult.
+          Opening up is often the first step toward relief.
+        </p>
+      </div>
+
+      <div class="guidance-card">
+        <h3>School-Based Support</h3>
+        <p>
+          Contact your school office to schedule a counselling session.
+          School professionals are trained to help confidentially.
+        </p>
+      </div>
+
+      <div class="guidance-card">
+        <h3>National Helplines (India)</h3>
+        <p><strong>KIRAN:</strong> 1800-599-0019</p>
+        <p><strong>iCall:</strong> +91 9152987821</p>
+      </div>
+
+      <div class="guidance-card urgent-card">
+        <h3>Immediate Help</h3>
+        <p>
+          If you feel unsafe or overwhelmed beyond control,
+          contact emergency services immediately.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <hr>
+
+  <section class="guidance-section" style="margin-top: 20px;">
+    <h2 class="section-title">When to Reach Out</h2>
+    <p class="section-subtitle">If any of these feel true, support can really help.</p>
+
+    <div class="guidance-card" style="text-align:left;">
+      <ul style="margin:0; padding-left: 18px; line-height:1.8; color: var(--text2);">
+        <li>Stress is affecting your sleep or appetite for several days.</li>
+        <li>You feel unsafe, threatened, or targeted.</li>
+        <li>You’re avoiding school or certain places because of fear.</li>
+        <li>You’re having frequent panic/anxiety moments.</li>
+        <li>You feel hopeless, numb, or like you can’t cope.</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="guidance-section" style="margin-top: 20px;">
+    <h2 class="section-title">Quick Words You Can Use</h2>
+    <p class="section-subtitle">Copy a line. Send it. That’s enough to start.</p>
+
+    <div class="guidance-grid">
+      <div class="guidance-card">
+        <h3>To a Parent / Guardian</h3>
+        <p style="color:var(--text2); line-height:1.6;">
+          “I’ve been feeling overwhelmed lately. Can we talk for a few minutes?”
+        </p>
+      </div>
+
+      <div class="guidance-card">
+        <h3>To a Teacher</h3>
+        <p style="color:var(--text2); line-height:1.6;">
+          “I’m struggling and I’m not sure what to do. Can you guide me to the right support?”
+        </p>
+      </div>
+
+      <div class="guidance-card">
+        <h3>To a Friend</h3>
+        <p style="color:var(--text2); line-height:1.6;">
+          “I don’t need advice right now. I just need someone to listen.”
+        </p>
+      </div>
+
+      <div class="guidance-card urgent-card">
+        <h3>If You Feel Unsafe</h3>
+        <p style="color:var(--text2); line-height:1.6;">
+          “I’m not feeling safe right now. I need help immediately.”
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="guidance-section" style="margin-top: 20px;">
+    <div class="guidance-card" style="text-align:left;">
+      <h3>Privacy Note</h3>
+      <p style="color:var(--text2); line-height:1.7;">
+        This page does not collect personal data. If you choose to reach out, use the support option that feels safest
+        for you.
+        If you are in danger, contact emergency services immediately.
+      </p>
+    </div>
+  </section>
+
+
+</body>

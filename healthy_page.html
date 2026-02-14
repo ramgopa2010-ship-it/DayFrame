@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sleep Time Tracker (Simple Graph)</title>
+  <style>
+    :root {
+      --bg: linear-gradient(rgb(113, 97, 239), rgb(222, 192, 241));
+      --panel: #121a33;
+      --text: #e9ecff;
+      --muted: #ffff;
+      --grid: rgba(233, 236, 255, 0.12);
+      --accent: #7c5cff;
+      --danger: #b79ced;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(124, 92, 255, .25), transparent 55%),
+        radial-gradient(900px 500px at 80% 30%, rgba(124, 92, 255, .12), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* ← important: stack vertically */
+      align-items: center;
+      /* ← center children horizontally */
+      padding: 22px;
+      padding-top: 60px;
+    }
+
+    .app {
+      width: min(1100px, 100%);
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 380px 1fr;
+      /* Left narrow, right wide */
+      align-items: start;
+    }
+
+    .card:nth-child(1) {
+      /* Sleep Tracker */
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .card:nth-child(2) {
+      /* Night Rhythm */
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .card:nth-child(3) {
+      /* Water Tracker */
+      grid-column: 1 / -1;
+      /* Spans both columns */
+      grid-row: 2;
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .03));
+      border: 1px solid rgba(255, 255, 255, .10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 16px 16px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(0, 0, 0, .10);
+    }
+
+    .title {
+      margin: 0;
+      font-size: 30px;
+      letter-spacing: .2px;
+    }
+
+    .title2 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.35;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 10px 0 6px;
+    }
+
+    input,
+    button {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(100, 85, 160, 0.796);
+      color: var(--text);
+      padding: 10px 12px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    input:focus {
+      border-color: rgba(124, 92, 255, .65);
+      box-shadow: 0 0 0 3px rgba(124, 92, 255, .22);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: linear-gradient(180deg, rgba(124, 92, 255, .95), rgba(124, 92, 255, .70));
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    .btn:hover {
+      filter: brightness(1.05);
+    }
+
+    .btn.secondary {
+      background: rgba(18, 26, 51, .75);
+      font-weight: 600;
+    }
+
+    .btn.danger {
+      background: rgb(125, 107, 162);
+    }
+
+    .hint {
+      margin-top: 10px;
+      padding: 32px 12px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, .18);
+      border: 1px dashed rgba(255, 255, 255, .14);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .error {
+      margin-top: 10px;
+      color: #ffd0d0;
+      background: rgba(239, 68, 68, .12);
+      border: 1px solid rgba(239, 68, 68, .35);
+      padding: 10px 12px;
+      border-radius: 12px;
+      display: none;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .chart-wrap {
+      padding: 14px 14px 10px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 430px;
+      display: block;
+      background: rgba(15, 22, 48, 0.643);
+      border: 1px solid rgba(255, 255, 255, .10);
+      border-radius: 14px;
+    }
+
+    .chart-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding: 10px 14px 14px;
+      color: var(--muted);
+      font-size: 12px;
+      align-items: center;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      background: rgba(0, 0, 0, .12);
+      white-space: nowrap;
+      font-family: var(--mono);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(124, 92, 255, .18);
+    }
+
+    .entry {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(0, 0, 0, .10);
+      align-items: center;
+    }
+
+    .entry .left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .badge {
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .14);
+      background: rgba(18, 26, 51, .55);
+      color: rgba(233, 236, 255, .92);
+      white-space: nowrap;
+    }
+
+    .linkbtn {
+      width: auto;
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      background: rgba(18, 26, 51, .75);
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, .14);
+    }
+
+    .tooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, .85);
+      border: 1px solid rgba(255, 255, 255, .18);
+      color: var(--text);
+      font-size: 12px;
+      font-family: var(--mono);
+      max-width: 320px;
+      display: none;
+      white-space: pre;
+      box-shadow: var(--shadow);
+    }
+
+
+
+    /*water-intake chart*/
+    .water-tracker {
+      text-align: center;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      max-width: 400px;
+    }
+
+    .progress-container {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      background: #e0e0e0;
+      border-radius: 20px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .progress-bar {
+      position: absolute;
+      /* Add this */
+      top: 0;
+      /* Add this */
+      left: 0;
+      /* Add this */
+      height: 100%;
+      background: linear-gradient(90deg, rgb(89, 76, 115), rgb(149, 127, 239));
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 20px;
+    }
+
+    .progress-segments {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+    }
+
+    .progress-segments span {
+      flex: 1;
+      border-right: 2px solid white;
+    }
+
+    .progress-segments span:last-child {
+      border-right: none;
+    }
+
+    button {
+      margin: 10px 5px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #addBtn {
+      background: rgb(71, 60, 116);
+      color: white;
+    }
+
+    #resetBtn {
+      background: #ff6b6b;
+      color: white;
+    }
+
+    .hero-title {
+      text-align: center;
+      width: 100%;
+      /* ← take full width */
+      max-width: 1100px;
+      /* match .app */
+      margin: 0 auto 80px auto;
+      /* ← auto left/right = center + bottom space */
+      padding: 0 20px;
+    }
+
+    .title-wrapper {
+      display: inline-block;
+      text-align: center;
+      /* extra safety */
+    }
+
+    .pre {
+      display: block;
+      font-size: 34px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.92);
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .h4 {
+      font-size: 20px;
+      font-family: Poppins;
+    }
+
+    .hero-title h1 {
+      margin: 0;
+      padding: 20px;
+      font-size: 90px;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1.2px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Optional: nicer mobile handling */
+    @media (max-width: 760px) {
+      .hero-title h1 {
+        font-size: 42px;
+      }
+
+      .pre {
+        font-size: 24px;
+      }
+
+      .hero-title {
+        margin-bottom: 60px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .hero-title h1 {
+        font-size: 36px;
+      }
+
+      .pre {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section class="hero-title">
+    <div class="title-wrapper">
+      <span class="pre">Elevate your</span>
+      <h1>Physical Health</h1>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <div class="about">
+      <h4>Welcome to improving your physical health. In this page, you have access to a variety of elements that allow
+        you to <b>keep track of your physical health</b>. For instance, there is a <b>sleep tracker</b>, that helps you
+        keep track of
+        your daily sleep routines, there is a <b>water intake tracker</b>, which keeps track of the water you should
+        have per
+        day, and <b>much more.</b> </h4>
+    </div>
+    <hr>
+  </section>
+
+  <div class="app">
+    <!-- Card 1: Sleep Time Tracker -->
+    <div class="card">
+      <div class="card-header">
+        <h1 class="title2">Sleep Time Tracker</h1>
+        <p class="subtitle">
+          This is a simple dot graph. The X-axis consists of the dates and the Y-axis consists of the time you slept.
+        </p>
+      </div>
+      <div class="card-body">
+        <label for="date">Date</label>
+        <input id="date" type="date" />
+
+        <label for="sleep">Time you fell asleep</label>
+        <input id="sleep" type="time" step="60" />
+
+        <button class="btn" id="addBtn">Add / Update Day</button>
+
+        <div class="row">
+          <button class="btn secondary" id="fillYesterday">Auto-fill yesterday's date</button>
+          <button class="btn danger" id="clearBtn">Clear all data</button>
+        </div>
+
+        <div class="error" id="err"></div>
+
+        <div class="hint">
+          <b>How the graph works:</b> The dots for earlier sleep time appear higher in the graph (e.g: 21:30pm), but
+          vice versa for the dots that appear when you sleep much later (e.g: 02:00am)<br />
+          For midnight (00:00), enter <b>"00:00"</b> in the input area.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Card 2: Night Rhythm Graph -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="title">Night Rhythm</h2>
+        <p class="subtitle">Keep track of your sleep cycle.</p>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="chart" width="1000" height="520"></canvas>
+      </div>
+      <div class="chart-footer">
+        <span class="chip"><span class="dot"></span> sleep-time dot</span>
+        <span class="chip" id="statsChip">0 nights tracked</span>
+        <span class="chip" id="avgChip">avg: --:--</span>
+      </div>
+    </div>
+
+    <!-- Card 3: Water Intake Tracker -->
+    <div class="card">
+      <div class="card-header">
+        <h2 class="title2">Water Intake Tracker</h2>
+        <p class="subtitle">Daily Goal: 13 glasses</p>
+      </div>
+      <div class="card-body">
+        <div class="progress-container">
+          <div class="progress-bar" id="progressBar"></div>
+          <div class="progress-segments">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <p id="countDisplay" style="text-align: center; margin: 10px 0;">0 / 13 glasses</p>
+
+        <button class="btn" id="addWaterBtn" style="background: rgb(133, 113, 174); margin-top: 10px;">Add a
+          Glass</button>
+        <button class="btn danger" id="resetWaterBtn" style="margin-top: 10px;">Reset</button>
+
+        <p id="goalMessage"
+          style="color: rgba(104, 88, 134, 0.935); font-weight: bold; margin-top: 10px; display: none; text-align: center; font-size: 30px;">
+          Goal reached! Great job staying hydrated!
+        </p>
+      </div>
+    </div>
+
+    <!--Card 4: Break Rhythm -->
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <div class="card-header">
+        <h2 class="title2">Break Rhythm</h2>
+        <p class="subtitle">Track your breaks throughout the day</p>
+      </div>
+      <div class="card-body">
+        <p id="breakCount" style="font-size: 40px; text-align: center; margin: 20px 0; font-weight: bold;">0 breaks
+          today</p>
+        <button class="btn" onclick="addBreak()" style="background: rgb(133, 113, 174); margin-top: 10px;">Log
+          Break</button>
+        <button class="btn danger" onclick="resetBreaks()" style="margin-top: 10px;">Reset</button>
+      </div>
+    </div>
+
+    <!--Card 5: Sunlight Check-->
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <div class="card-header">
+        <h2 class="title2">Sunlight Check </h2>
+        <p class="subtitle">Daily sunlight exposure tracker</p>
+      </div>
+      <div class="card-body">
+        <p id="sunStatus" style="font-size: 40px; text-align: center; margin: 20px 0; font-weight: bold;">Not logged
+          today</p>
+        <button class="btn" onclick="logSunlight()" style="background: rgb(133, 113, 174); margin-top: 10px;">Yes, I got
+          sunlight</button>
+        <button class="btn danger" onclick="resetSunlight()" style="margin-top: 10px;">Reset</button>
+      </div>
+    </div>
+
+    <!--Card 6: Screen Time-->
+
+    <div class="card" style="grid-column: 1 / -1;">
+      <div class="card-header">
+        <h2 class="title2">Digital Usage Trend</h2>
+        <p class="subtitle">Track your screen time sessions throughout the day</p>
+      </div>
+      <div class="card-body">
+        <div
+          style="margin-top: 20px; padding: 20px; background: rgba(0, 0, 0, .18); border-radius: 12px; text-align: center;">
+          <p style="font-size: 14px; color: var(--muted); margin-bottom: 5px;">Total Screen Time Today</p>
+          <p id="totalScreenTime" style="font-size: 36px; font-weight: bold; margin: 0;">0.0 hrs</p>
+        </div>
+        <label for="sessionHours">Add screen time session (hours)</label>
+        <input type="number" id="sessionHours" placeholder="Enter hours" min="0" max="24" step="0.5"
+          style="margin-bottom: 10px;">
+
+        <button class="btn" onclick="addScreenSession()" style="background: rgb(133, 113, 174);">Add Session</button>
+        <button class="btn danger" onclick="resetScreenTime()" style="margin-top: 10px;">Reset Day</button>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="tooltip" id="tip"></div>
+
+  <script>
+    let breaks = localStorage.getItem("breaks") || 0;
+    updateBreaks();
+
+    function addBreak() {
+      breaks++;
+      localStorage.setItem("breaks", breaks);
+      updateBreaks();
+    }
+
+    function resetBreaks() {
+      breaks = 0;
+      localStorage.setItem("breaks", breaks);
+      updateBreaks();
+    }
+
+    function updateBreaks() {
+      document.getElementById("breakCount").innerText =
+        breaks + " breaks today";
+    }
+  </script>
+
+
+  <script>
+    let sunlight = localStorage.getItem("sunlight") || false;
+    updateSun();
+
+    function logSunlight() {
+      sunlight = true;
+      localStorage.setItem("sunlight", true);
+      updateSun();
+    }
+
+    function resetSunlight() {
+      sunlight = false;
+      localStorage.setItem("sunlight", false);
+      updateSun();
+    }
+
+    function updateSun() {
+      document.getElementById("sunStatus").innerText =
+        sunlight === "true" || sunlight === true
+          ? "Sunlight logged today"
+          : "Not logged today";
+    }
+  </script>
+
+
+  <script>
+    let totalScreenHours = parseFloat(localStorage.getItem("totalScreenTime")) || 0;
+    updateScreenDisplay();
+
+    function addScreenSession() {
+      let hours = parseFloat(document.getElementById("sessionHours").value);
+
+      if (!hours || hours <= 0) {
+        alert("Please enter a valid number of hours");
+        return;
+      }
+
+      totalScreenHours += hours;
+      localStorage.setItem("totalScreenTime", totalScreenHours);
+      document.getElementById("sessionHours").value = ""; // Clear input
+      updateScreenDisplay();
+    }
+
+    function resetScreenTime() {
+      totalScreenHours = 0;
+      localStorage.setItem("totalScreenTime", totalScreenHours);
+      document.getElementById("sessionHours").value = "";
+      updateScreenDisplay();
+    }
+
+    function updateScreenDisplay() {
+      document.getElementById("totalScreenTime").textContent =
+        totalScreenHours.toFixed(1) + " hrs";
+    }
+  </script>
+
+</body>
+
+<script>
+  const STORAGE_KEY = "sleep_tracker_simple_v1";
+  let data = [];
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      data = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(data)) data = [];
+    } catch {
+      data = [];
+    }
+    data.sort((a, b) => a.date.localeCompare(b.date));
+  }
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  const pad2 = n => String(n).padStart(2, "0");
+
+  function showError(msg) {
+    const el = document.getElementById("err");
+    if (!msg) {
+      el.style.display = "none";
+      el.textContent = "";
+      return;
+    }
+    el.style.display = "block";
+    el.textContent = msg;
+  }
+
+  function timeToMinutes(t) {
+    const [h, m] = t.split(":").map(Number);
+    return h * 60 + m;
+  }
+
+  function minutesToTime(mins) {
+    mins = ((mins % 1440) + 1440) % 1440;
+    const h = Math.floor(mins / 60);
+    const m = mins % 60;
+    return `${pad2(h)}:${pad2(m)}`;
+  }
+
+  function fmtDateShort(d) {
+    const dt = new Date(d + "T00:00:00");
+    return dt.toLocaleDateString(undefined, { day: "2-digit", month: "short" });
+  }
+
+  function timeToNightAxisMinutes(t) {
+    const m = timeToMinutes(t);
+    const start = 18 * 60;
+    if (m < 6 * 60) return (m + 1440) - start;
+    return m - start;
+  }
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  function averageSleepTime() {
+    if (data.length === 0) return null;
+
+    const vals = data.map(d => timeToNightAxisMinutes(d.sleep));
+    const avg = vals.reduce((s, x) => s + x, 0) / vals.length;
+
+    const start = 18 * 60;
+    const minutesFromMidnight = (start + avg) % 1440;
+    return minutesToTime(Math.round(minutesFromMidnight));
+  }
+
+  const canvas = document.getElementById("chart");
+  const ctx = canvas.getContext("2d");
+  const tip = document.getElementById("tip");
+  let hitZones = [];
+
+  function drawChart() {
+    const cssW = canvas.clientWidth;
+    const cssH = canvas.clientHeight;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const W = cssW, H = cssH;
+    ctx.clearRect(0, 0, W, H);
+
+    const padL = 62, padR = 18, padT = 18, padB = 46;
+    const plotX = padL, plotY = padT;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    const axisMin = 0;
+    const axisMax = 12 * 60;
+
+    const grid = getComputedStyle(document.documentElement).getPropertyValue("--grid").trim();
+    ctx.save();
+    ctx.strokeStyle = grid;
+    ctx.lineWidth = 1;
+
+    for (let hr = 0; hr <= 12; hr += 1) {
+      const y = plotY + (hr / 12) * plotH;
+      ctx.beginPath();
+      ctx.moveTo(plotX, y);
+      ctx.lineTo(plotX + plotW, y);
+      ctx.stroke();
+    }
+
+    const n = data.length;
+    const colW = n > 0 ? plotW / n : plotW;
+    for (let i = 0; i <= n; i++) {
+      const x = plotX + i * colW;
+      ctx.beginPath();
+      ctx.moveTo(x, plotY);
+      ctx.lineTo(x, plotY + plotH);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    ctx.save();
+    ctx.fillStyle = "rgba(233,236,255,.88)";
+    ctx.font = "12px " + getComputedStyle(document.documentElement).getPropertyValue("--mono").trim();
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let hr = 0; hr <= 12; hr += 2) {
+      const y = plotY + (hr / 12) * plotH;
+      const clockHour = (18 + hr) % 24;
+      ctx.fillText(`${pad2(clockHour)}:00`, plotX - 10, y);
+    }
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    ctx.font = "12px " + getComputedStyle(document.documentElement).getPropertyValue("--sans").trim();
+
+    const step = n <= 10 ? 1 : n <= 20 ? 2 : 3;
+    for (let i = 0; i < n; i += step) {
+      const x = plotX + (i + 0.5) * colW;
+      ctx.fillStyle = "rgba(233,236,255,.85)";
+      ctx.fillText(fmtDateShort(data[i].date), x, plotY + plotH + 10);
+    }
+    ctx.restore();
+
+    if (n === 0) {
+      ctx.save();
+      ctx.fillStyle = "rgba(233,236,255,.75)";
+      ctx.font = "16px " + getComputedStyle(document.documentElement).getPropertyValue("--sans").trim();
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("Add an entry to see dots on the graph.", plotX + plotW / 2, plotY + plotH / 2);
+      ctx.restore();
+      hitZones = [];
+      return;
+    }
+
+    const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
+    hitZones = [];
+
+    const pts = data.map((row, i) => {
+      const x = plotX + (i + 0.5) * colW;
+      const axisM = timeToNightAxisMinutes(row.sleep);
+      const t = clamp(axisM, axisMin, axisMax);
+      const y = plotY + (t / (axisMax - axisMin)) * plotH;
+      return { x, y, row };
+    });
+
+    ctx.save();
+    ctx.strokeStyle = "rgba(124,92,255,.35)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    pts.forEach((p, idx) => {
+      if (idx === 0) ctx.moveTo(p.x, p.y);
+      else ctx.lineTo(p.x, p.y);
+    });
+    ctx.stroke();
+    ctx.restore();
+
+    pts.forEach(p => {
+      ctx.save();
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      hitZones.push({
+        x: p.x, y: p.y, r: 10,
+        text: `date: ${p.row.date}\nsleep: ${p.row.sleep}`
+      });
+    });
+  }
+
+  function hideTip() { tip.style.display = "none"; }
+  function showTip(x, y, text) {
+    tip.style.display = "block";
+    tip.textContent = text;
+    const pad = 12;
+    const w = tip.offsetWidth;
+    const h = tip.offsetHeight;
+    const nx = clamp(x + 16, pad, window.innerWidth - w - pad);
+    const ny = clamp(y + 16, pad, window.innerHeight - h - pad);
+    tip.style.left = nx + "px";
+    tip.style.top = ny + "px";
+  }
+
+  canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    for (const z of hitZones) {
+      const dx = mx - z.x;
+      const dy = my - z.y;
+      if (dx * dx + dy * dy <= z.r * z.r) {
+        showTip(e.clientX, e.clientY, z.text);
+        return;
+      }
+    }
+    hideTip();
+  });
+  canvas.addEventListener("mouseleave", hideTip);
+
+  function upsert(date, sleep) {
+    const idx = data.findIndex(d => d.date === date);
+    const row = { date, sleep };
+    if (idx >= 0) data[idx] = row;
+    else data.push(row);
+    data.sort((a, b) => a.date.localeCompare(b.date));
+    save();
+    rerender();
+  }
+
+  document.getElementById("addBtn").addEventListener("click", () => {
+    showError("");
+    const date = document.getElementById("date").value;
+    const sleep = document.getElementById("sleep").value;
+
+    if (!date) return showError("Pick a date so the dot knows which day it belongs to.");
+    if (!sleep) return showError("Enter the time you fell asleep.");
+
+    upsert(date, sleep);
+    document.getElementById("sleep").value = "";
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    showError("");
+    const ok = confirm("Clear all saved entries?");
+    if (!ok) return;
+    data = [];
+    save();
+    rerender();
+  });
+
+  document.getElementById("fillYesterday").addEventListener("click", () => {
+    showError("");
+    const now = new Date();
+    now.setDate(now.getDate() - 1);
+    const y = now.getFullYear();
+    const m = pad2(now.getMonth() + 1);
+    const d = pad2(now.getDate());
+    document.getElementById("date").value = `${y}-${m}-${d}`;
+  });
+
+  function rerender() {
+    // Removed renderEntries() call since we don't have that section anymore
+    drawChart();
+
+    document.getElementById("statsChip").textContent =
+      `${data.length} night${data.length === 1 ? "" : "s"} tracked`;
+
+    const avg = averageSleepTime();
+    document.getElementById("avgChip").textContent =
+      avg ? `avg: ${avg}` : "avg: --:--";
+  }
+
+  load();
+
+  (function setDefaultDate() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = pad2(now.getMonth() + 1);
+    const d = pad2(now.getDate());
+    document.getElementById("date").value = `${y}-${m}-${d}`;
+  })();
+
+  rerender();
+  window.addEventListener("resize", drawChart);
+</script>
+
+
+
+<script>
+  /*JS for water-intake tracker*/
+  document.getElementById('addWaterBtn').addEventListener('click', addWater);
+  document.getElementById('resetWaterBtn').addEventListener('click', resetWater);
+
+  let waterCount = 0;
+  const dailyGoal = 13;
+
+  // Load saved data when page loads
+  function loadData() {
+    const saved = localStorage.getItem('waterCount');
+    if (saved) {
+      waterCount = parseInt(saved);
+      updateDisplay();
+    }
+  }
+
+  // Call this when page loads
+  loadData();
+
+  function updateDisplay() {
+    // Update text
+    document.getElementById('countDisplay').textContent =
+      `${waterCount} / ${dailyGoal} glasses`;
+
+    // Update progress bar
+    const percentage = (waterCount / dailyGoal) * 100;
+    document.getElementById('progressBar').style.width = percentage + '%';
+
+    // Save to localStorage
+    localStorage.setItem('waterCount', waterCount);
+  }
+
+  function addWater() {
+    if (waterCount < dailyGoal) {
+      waterCount++;
+      updateDisplay();
+
+      // Celebrate when goal is reached
+      if (waterCount === dailyGoal) {
+        alert('🎉 Goal reached! Great job staying hydrated!');
+      }
+    }
+  }
+  function resetWater() {
+    waterCount = 0;
+    updateDisplay();
+  }
+
+  function addWater() {
+    if (waterCount < dailyGoal) {
+      waterCount++;
+      updateDisplay();
+
+      // Show message in the box when goal is reached
+      if (waterCount === dailyGoal) {
+        document.getElementById('goalMessage').style.display = 'block';
+      }
+    }
+  }
+
+  function resetWater() {
+    waterCount = 0;
+    updateDisplay();
+    document.getElementById('goalMessage').style.display = 'none';  // Hide message on reset
+  }
+</script>
+</body>
+
+</html>

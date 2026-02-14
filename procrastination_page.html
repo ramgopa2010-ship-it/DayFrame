@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <title>PROCRASTINATION</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: rgb(227, 213, 202);
+      color: #333;
+      min-height: 100vh;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    /* Schedule Generator Section */
+    .schedule-section {
+      background: rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      padding: 32px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      margin: 40px auto;
+      max-width: 1000px;
+    }
+
+    .schedule-section h2 {
+      text-align: center;
+      color: white;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    #scheduleBtn {
+      display: block;
+      margin: 24px auto;
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: 600;
+      background: rgb(138, 130, 123);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    #scheduleBtn:hover:not(:disabled) {
+      background: rgb(176, 165, 156);
+      transform: translateY(-2px);
+    }
+
+    #scheduleBtn:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+      background: rgba(183, 172, 163, 0.892);
+      color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      text-align: left;
+    }
+
+    .schedule-table thead {
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .schedule-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .badge.task {
+      background: rgba(0, 255, 160, 0.22);
+      color: #0f9
+    }
+
+    .badge.break {
+      background: rgba(255, 255, 0, 0.20);
+      color: #ee0
+    }
+
+    .badge.meal {
+      background: rgba(255, 140, 0, 0.22);
+      color: #f80
+    }
+
+    .badge.activity {
+      background: rgba(120, 200, 255, 0.22);
+      color: #5af
+    }
+
+    .notes-box {
+      background: rgba(0, 0, 0, 0.18);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+
+    .notes-box ul {
+      margin: 12px 0 0 20px;
+      padding: 0;
+    }
+
+    .loading-message {
+      text-align: center;
+      padding: 60px 20px;
+      color: white;
+      font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+      .mental {
+        font-size: clamp(60px, 18vw, 100px);
+      }
+
+      .schedule-section {
+        padding: 24px;
+      }
+    }
+
+    .task-input-area {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      padding-top: 90px;
+    }
+
+    .task-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .task-form input[type="text"] {
+      flex: 1 1 300px;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      background: rgb(176, 165, 156);
+      color: white;
+    }
+
+    .task-form input[type="text"]::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .task-sliders {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 280px;
+      background-color: rgb(186, 175, 166);
+      padding: 20px;
+      border-radius: 20px;
+    }
+
+    .task-sliders label {
+      display: flex;
+      flex-direction: column;
+      color: white;
+      font-size: 14px;
+    }
+
+    .task-sliders input[type="range"] {
+      width: 100%;
+      margin: 6px 0;
+    }
+
+    .task-list {
+      margin-top: 20px;
+      min-height: 80px;
+    }
+
+    .task-item {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      font-size: 15px;
+    }
+
+    .task-item button {
+      background: rgb(176, 165, 156);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .task-item button:hover {
+      background: rgb(176, 165, 156);
+    }
+
+    #addTaskBtn {
+      padding: 20px;
+      border-radius: 10px;
+      background-color: rgb(176, 165, 156);
+      color: white;
+      border: none;
+    }
+
+    .title {
+      font-size: 40px;
+      font-family: Poppins;
+      text-align: center;
+      margin-bottom: 2px;
+      margin-top: 10px;
+      color: #67615c;
+    }
+
+    .main-title {
+      font-size: 110px;
+      font-family: Poppins;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 10px;
+      color: #67615c;
+    }
+
+    .privacy-notice {
+      background: rgba(255, 193, 7, 0.15);
+      border-left: 4px solid #8f6d07;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .privacy-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .privacy-text {
+      color: rgba(66, 57, 57, 0.95);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .privacy-text strong {
+      color: #936f05;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p class="title">Break your</p>
+  <p class="main-title">Procrastination Habits</p>
+  <div class="schedule-section">
+    <h2>| Build Your Day |</h2>
+
+    <!-- Add this right after the opening <div class="schedule-section"> -->
+    <div class="privacy-notice">
+      <div class="privacy-icon">🔒</div>
+      <div class="privacy-text">
+        <strong>Privacy Notice:</strong> This tool uses Google's Gemini AI to generate schedules. Please do not enter
+        personal, sensitive, or confidential information in your task descriptions.
+      </div>
+    </div>
+
+    <!-- Task Input Form -->
+    <div class="task-input-area">
+      <div class="task-form">
+        <input type="text" id="taskName" placeholder="What do you need to do? (e.g. Finish English essay)" required />
+
+        <div class="task-sliders">
+          <label>
+            Difficulty (1 easy – 5 hard):
+            <input type="range" id="taskDifficulty" min="1" max="5" value="3" />
+            <span id="diffValue">3</span>
+          </label>
+
+          <label>
+            Your skill/confidence (1 low – 5 high):
+            <input type="range" id="taskSkill" min="1" max="5" value="3" />
+            <span id="skillValue">3</span>
+          </label>
+        </div>
+
+        <button id="addTaskBtn">+ Add Task</button>
+      </div>
+
+      <!-- Live list of added tasks -->
+      <div id="taskList" class="task-list"></div>
+    </div>
+
+    <!-- Generate button -->
+    <button id="scheduleBtn">Generate My Schedule</button>
+
+    <table id="scheduleTable" class="schedule-table">
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>Label</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="notesBox" class="notes-box"></div>
+  </div>
+
+  <script type="module">
+    const scheduleBtn = document.getElementById("scheduleBtn");
+    const tableBody = document.querySelector("#scheduleTable tbody");
+    const notesBox = document.getElementById("notesBox");
+
+    // ─── Task Management ────────────────────────────────────────
+    let userTasks = [];
+
+    const taskNameInput = document.getElementById("taskName");
+    const diffInput = document.getElementById("taskDifficulty");
+    const skillInput = document.getElementById("taskSkill");
+    const diffValueDisplay = document.getElementById("diffValue");
+    const skillValueDisplay = document.getElementById("skillValue");
+    const addTaskBtn = document.getElementById("addTaskBtn");
+    const taskListEl = document.getElementById("taskList");
+
+    // Live update slider values
+    diffInput.addEventListener("input", () => {
+      diffValueDisplay.textContent = diffInput.value;
+    });
+    skillInput.addEventListener("input", () => {
+      skillValueDisplay.textContent = skillInput.value;
+    });
+
+    // Add task
+    addTaskBtn.addEventListener("click", () => {
+      const name = taskNameInput.value.trim();
+      if (!name) {
+        alert("Please enter a task name");
+        return;
+      }
+
+      const task = {
+        name,
+        difficulty: Number(diffInput.value),
+        skill: Number(skillInput.value)
+      };
+
+      userTasks.push(task);
+      renderTaskList();
+
+      // Clear input
+      taskNameInput.value = "";
+    });
+
+    // Render task list
+    function renderTaskList() {
+      taskListEl.innerHTML = "";
+
+      userTasks.forEach((task, index) => {
+        const item = document.createElement("div");
+        item.className = "task-item";
+        item.innerHTML = `
+        <span>
+          <strong>${task.name}</strong> 
+          — Diff: ${task.difficulty} | Skill: ${task.skill}
+        </span>
+        <button data-index="${index}">×</button>
+      `;
+        taskListEl.appendChild(item);
+      });
+
+      // Remove task
+      taskListEl.querySelectorAll("button").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.dataset.index);
+          userTasks.splice(idx, 1);
+          renderTaskList();
+        });
+      });
+    }
+
+    // ─── LocalStorage Functions ────────────────────────────────
+
+    // Save schedule to localStorage
+    function saveScheduleToStorage(scheduleData) {
+      try {
+        const saveData = {
+          schedule: scheduleData.schedule || [],
+          notes: scheduleData.notes || [],
+          tasks: userTasks,
+          timestamp: new Date().toISOString()
+        };
+        localStorage.setItem('savedSchedule', JSON.stringify(saveData));
+        console.log('✅ Schedule saved to localStorage');
+      } catch (err) {
+        console.error('Failed to save schedule:', err);
+      }
+    }
+
+    // Load schedule from localStorage
+    function loadScheduleFromStorage() {
+      try {
+        const saved = localStorage.getItem('savedSchedule');
+        if (!saved) return null;
+
+        const data = JSON.parse(saved);
+
+        // Check if saved data is recent (within last 24 hours)
+        const savedTime = new Date(data.timestamp);
+        const now = new Date();
+        const hoursDiff = (now - savedTime) / (1000 * 60 * 60);
+
+        if (hoursDiff > 24) {
+          console.log('Saved schedule is older than 24 hours, clearing...');
+          localStorage.removeItem('savedSchedule');
+          return null;
+        }
+
+        return data;
+      } catch (err) {
+        console.error('Failed to load schedule:', err);
+        return null;
+      }
+    }
+
+    // Clear saved schedule
+    function clearSavedSchedule() {
+      localStorage.removeItem('savedSchedule');
+      console.log('🗑️ Schedule cleared from localStorage');
+    }
+
+    // ─── Generate Schedule ──────────────────────────────────────
+
+    async function generateSchedule() {
+      if (userTasks.length === 0) {
+        alert("Add at least one task first!");
+        return;
+      }
+
+      scheduleBtn.disabled = true;
+      scheduleBtn.textContent = "Creating plan...";
+
+      tableBody.innerHTML = '<tr><td colspan="4" class="loading-message">Creating your personalized schedule...</td></tr>';
+      notesBox.innerHTML = '';
+
+      try {
+        const res = await fetch(
+          "https://us-central1-dayframe-318d5.cloudfunctions.net/generateSchedule",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              wakeTime: "08:00",
+              sleepTime: "23:00",
+              tasks: userTasks
+            })
+          }
+        );
+
+        if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+        const data = await res.json();
+
+        if (data.warning) {
+          notesBox.innerHTML = `<p style="color:#ffcc00; font-weight:bold;">${data.warning}</p>`;
+          if (data.raw) notesBox.innerHTML += `<pre style="color:#ff9999;">${escapeHtml(data.raw)}</pre>`;
+          tableBody.innerHTML = '';
+          return;
+        }
+
+        renderSchedule(data);
+      } catch (err) {
+        console.error(err);
+        tableBody.innerHTML = `<tr><td colspan="4" style="color:#ff6b6b; text-align:center; padding:60px;">Error: ${err.message}</td></tr>`;
+      } finally {
+        scheduleBtn.disabled = false;
+        scheduleBtn.textContent = "Generate My Schedule";
+      }
+    }
+
+    // Render schedule
+    function renderSchedule(data) {
+      tableBody.innerHTML = "";
+
+      const schedule = Array.isArray(data?.schedule) ? data.schedule : [];
+
+      for (const item of schedule) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+        <td>${item.start ?? ""}</td>
+        <td>${item.end ?? ""}</td>
+        <td>${item.label ?? ""}</td>
+        <td><span class="badge ${String(item.type ?? "activity").toLowerCase()}">${item.type ?? "activity"}</span></td>
+      `;
+        tableBody.appendChild(tr);
+      }
+
+      const notes = Array.isArray(data?.notes) ? data.notes : [];
+      notesBox.innerHTML = notes.length
+        ? `<b style="font-size:1.2em;">Notes:</b><ul>${notes.map(n => `<li>${escapeHtml(n)}</li>`).join("")}</ul>`
+        : "<p style='opacity:0.7;'>No additional notes this time.</p>";
+
+      // Save to localStorage after rendering
+      saveScheduleToStorage(data);
+    }
+
+    // Escape HTML
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    // ─── Event Listeners ────────────────────────────────────────
+
+    scheduleBtn.addEventListener("click", generateSchedule);
+
+    // Load saved schedule when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = loadScheduleFromStorage();
+
+      if (saved && saved.schedule && saved.schedule.length > 0) {
+        // Restore tasks
+        if (saved.tasks && saved.tasks.length > 0) {
+          userTasks = saved.tasks;
+          renderTaskList();
+        }
+
+        // Restore schedule
+        renderSchedule(saved);
+
+        // Show notification
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(76, 175, 80, 0.95);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+      `;
+        notification.textContent = '✅ Restored your last schedule';
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.animation = 'slideOut 0.3s ease';
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+    });
+
+    // Add CSS animations for notification
+    const style = document.createElement('style');
+    style.textContent = `
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(400px); opacity: 0; }
+    }
+  `;
+    document.head.appendChild(style);
+  </script>
+
+</body>
+
+</html>
