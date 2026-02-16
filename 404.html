@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <title>404 • DayFrame</title>
+
+  <style>
+    :root {
+      --bg1: rgb(214, 204, 194);
+      --bg2: rgb(245, 235, 224);
+      --ink: rgba(54, 38, 28, 0.85);
+      --ink-soft: rgba(89, 63, 46, 0.70);
+      --glass: rgba(255, 255, 255, 0.55);
+      --glass-strong: rgba(255, 255, 255, 0.72);
+      --border: rgba(255, 255, 255, 0.6);
+      --shadow: rgba(0, 0, 0, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Poppins, sans-serif;
+      background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    /* Soft moving blobs (subtle, not loud) */
+    .blob {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      filter: blur(35px);
+      opacity: 0.35;
+      animation: float 14s ease-in-out infinite;
+      background: rgba(213, 189, 175, 0.9);
+    }
+
+    .blob.b1 {
+      top: -180px;
+      left: -160px;
+    }
+
+    .blob.b2 {
+      bottom: -200px;
+      right: -180px;
+      animation-duration: 18s;
+      opacity: 0.28;
+      background: rgba(237, 237, 233, 1);
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(20px, 26px) scale(1.05);
+      }
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      width: min(760px, 92vw);
+      padding: 42px 34px;
+      border-radius: 22px;
+      background: var(--glass);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 2px solid var(--border);
+      box-shadow: 0 18px 45px var(--shadow);
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 13px;
+      background: var(--glass-strong);
+      border: 1px solid var(--border);
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(42px, 6vw, 70px);
+      letter-spacing: 1px;
+      line-height: 1.05;
+      font-weight: 800;
+    }
+
+    p {
+      margin: 10px auto 0;
+      max-width: 56ch;
+      font-size: clamp(16px, 2vw, 18px);
+      color: var(--ink-soft);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .actions {
+      margin-top: 26px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      cursor: pointer;
+      font-family: Poppins, sans-serif;
+      font-weight: 700;
+      padding: 14px 18px;
+      border-radius: 14px;
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 170px;
+    }
+
+    .btn.primary {
+      background: rgba(180, 172, 164, 0.85);
+      color: white;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.14);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      background: rgba(130, 124, 119, 0.85);
+    }
+
+    .btn.primary:active {
+      transform: translateY(0px) scale(0.98);
+    }
+
+    .btn.ghost {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    .btn.ghost:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .btn.ghost:active {
+      transform: translateY(0px) scale(0.98);
+    }
+
+    .tiny {
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: 0.75;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      background: rgba(255, 255, 255, 0.55);
+      padding: 2px 6px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="blob b1" aria-hidden="true"></div>
+  <div class="blob b2" aria-hidden="true"></div>
+
+  <main class="card">
+    <div class="badge">404 • Lost in the Frame</div>
+    <h1>Page not found.</h1>
+
+    <p>
+      The link you followed doesn’t exist (or it moved).
+      Even the internet gets a little overwhelmed sometimes.
+      Let’s bring you back to something steady.
+    </p>
+
+    <div class="actions">
+      <a class="btn primary" href="/">Return to DayFrame</a>
+      <button class="btn ghost" type="button" onclick="history.back()">Go Back</button>
+    </div>
+
+    <p class="tiny">
+      Tip: check the spelling in the URL — one tiny character can cause a 404.
+    </p>
+  </main>
+</body>
+
+</html>
